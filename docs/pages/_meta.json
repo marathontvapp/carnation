@@ -1,8 +1,12 @@
 {
   "index": {
-    "title": "Getting Started",
+    "title": "Carnation",
     "type": "page",
-    "display": "hidden"
+    "display": "hidden",
+    "theme": {
+      "layout": "full",
+      "timestamp": false
+    }
   },
   "docs": {
     "title": "Documentation",
