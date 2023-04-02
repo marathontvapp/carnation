@@ -1,7 +1,7 @@
 {
   "index": {
-    "title": "Carnation",
     "type": "page",
+    "title": "Carnation",
     "display": "hidden",
     "theme": {
       "layout": "full",
@@ -9,10 +9,7 @@
     }
   },
   "docs": {
-    "title": "Documentation",
     "type": "page",
-    "theme": {
-      "breadcrumb": false
-    }
+    "title": "Documentation"
   }
 }

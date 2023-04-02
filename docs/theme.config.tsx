@@ -15,17 +15,27 @@ const config: DocsThemeConfig = {
   footer: {
     text: <span>&copy; 2023</span>,
   },
+  head: (
+    <>
+      <link rel="icon" href="/favicon.ico" />
+    </>
+  ),
   logo: (
     <span className="flex h-4 aspect-wordmark">
       <Wordmark />
     </span>
   ),
+  primaryHue: 6,
   project: {
     link: "https://github.com/marathontvapp/carnation",
   },
   useNextSeoProps() {
     const { asPath } = useRouter();
-    if (asPath !== "/") {
+    if (asPath === "/") {
+      return {
+        title: "Carnation",
+      };
+    } else {
       return {
         titleTemplate: "%s - Carnation",
       };
