@@ -1,5 +1,15 @@
 {
   "index": "Introduction",
-  "design-systems": "Design Systems",
-  "getting-started": "Getting Started"
+  "background": "Background",
+  "getting-started": "Getting Started",
+  "-": {
+    "type": "separator"
+  },
+  "core": "Core",
+  "motion": "Motion",
+  "components": "Components",
+  "--": {
+    "type": "separator"
+  },
+  "api": "API"
 }

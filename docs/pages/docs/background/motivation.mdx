@@ -1,0 +1,24 @@
+# Philosophy
+
+React is a great framework for many reasons, but one that draws many people in is its flexibility. React is not just limited to web development; it can also be used to build [native apps](https://reactnative.dev/) and even [command-line apps](https://github.com/vadimdemedes/ink)!
+
+The idea of sharing code betwen web and native is very exciting! However, if you're a web developer used to DOM elements, building apps with only `View` and `Text` components from [React Native for Web](https://necolas.github.io/react-native-web/) (or `Stack` and `Text` from [Tamagui](https://tamagui.dev/)) may feel foreign. That's because these tools focus on sharing native conventions with the web, not the other way around.
+
+This has been done with good reason: **React Native is not React DOM**. Let's look at a few examples:
+
+- On the web, you can simply enable scrolling by setting `overflow: auto` via CSS. On native, you have to wrap the scrollable components with a `ScrollView`.
+- On the web, linking to different pages is done with an `a` element and an `href` attribute. On native, there is no semantic difference between a link and a button — they're both just `Pressable`s with a different callback.
+- On the web, gradients can be rendered on any element via CSS. On native, you have to use an external library like [react-native-linear-gradient](https://github.com/react-native-linear-gradient/react-native-linear-gradient) to render gradients via the `LinearGradient` component.
+
+And so, these libraries have opted to prioritize native over web conventions. However, every decision comes at a cost and, as we see it, there is one main pillar that has been affected: accessibility.
+
+## Accessibility
+
+Accessibility is baked into the web. Semantic elements (like `h1`, `button`, and `header`) inform screen readers how to read the DOM and navigate a page. [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes) provide additional information to screen readers to build complex interactive components not native to the web, like modal dialogs, tabs, and context menus.
+
+React Native, on the other hand, does not have semantic elements (beyond select components like `Text`, `TextInput`, and `Image`). Screen reader interactivity is defined via [roles and accessibility props](https://reactnative.dev/docs/accessibility), which are inspired by (but not 1:1 to) ARIA attributes.
+
+How have other libraries tried to bridge the gap?
+
+- React Native for Web defines accessibility information via props. The `role` prop is used to _infer_ the correct tag for each elements, while [`aria-*` props](https://necolas.github.io/react-native-web/docs/accessibility/) map 1:1 to React DOM and to analagous `accessibility*` props on React Native. While this is a fine approach, inferring the tag based on role is fragile; why not just let engineers choose the tag directly?
+- Tamagui does something similar, but has a more explicit approach. Every component exposes a `tag` prop that lets you define the exact semantic element to use on the web. While this solves React Native for Web's issue, it introduces a new problem: the use of a prop makes the semantic meaning of the component a _variable selection_ and not inherent to the component itself.
