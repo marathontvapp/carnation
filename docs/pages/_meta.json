@@ -1,0 +1,14 @@
+{
+  "index": {
+    "title": "Getting Started",
+    "type": "page",
+    "display": "hidden"
+  },
+  "docs": {
+    "title": "Documentation",
+    "type": "page",
+    "theme": {
+      "breadcrumb": false
+    }
+  }
+}
