@@ -1,0 +1,32 @@
+# animate
+
+<Callout type="warning" emoji="🚧">
+  This page is under construction.
+</Callout>
+
+```tsx
+import { c } from "carnation";
+import { animate, m, useMotionValue } from "carnation/motion";
+
+function Component() {
+  const translateX = useMotionValue(0);
+
+  return (
+    <c.div>
+      <m.div style={{ translateX }} />
+
+      <c.button
+        onPress={() => {
+          animate(translateX, Math.random() * 100, {
+            type: "timing",
+            ease: "easeInOut",
+            duration: 2,
+          });
+        }}
+      >
+        <c.span>Move</c.span>
+      </c.button>
+    </c.div>
+  );
+}
+```

@@ -1,26 +1,42 @@
 # Image
 
-<Table.Root
-  columns={[
-    { title: "Component", width: 0.25 },
-    { title: "Description", width: 0.75 },
-  ]}
->
-  <Table.Row
-    data={{
-      Component: <code>{"<c.img>"}</code>,
-      Description: "TK",
-    }}
-  />
-</Table.Root>
+```tsx
+<c.img src="https://..." alt="A warm sunrise over a snowy mountain." />
+```
+
+The `<c.img>` component embeds an image into the screen.
+
+## Configuration
+
+By default, we will render an `<img>` element on the web and an `<Image>` component on native. If you're using a framework like [Next.js](https://nextjs.org/) or [Expo Image](https://docs.expo.dev/versions/unversioned/sdk/image/), you can substitute the default-rendered element by passing it to `CarnationProvider`:
+
+```tsx filename="apps/web/pages/_app.tsx"
+import Image from "next/image";
+import { CarnationConfig, CarnationProvider } from "carnation";
+
+export default function App({ Component, pageProps }: AppProps) {
+  const config: CarnationConfig = {
+    image: {
+      component: Image,
+    },
+  };
+
+  return (
+    <CarnationProvider config={config}>
+      <Component {...pageProps} />
+    </CarnationProvider>
+  );
+}
+```
 
 ## API Reference
 
 <Table.Root
   columns={[
-    { title: "Prop", width: 0.4 },
-    { title: "Type", width: 0.4 },
-    { title: "Default", width: 0.2 },
+    { title: "Prop", width: 0.2 },
+    { title: "Type", width: 0.3 },
+    { title: "Default", width: 0.15 },
+    { title: "Description", width: 0.35 },
   ]}
 >
   <Table.Row
@@ -28,6 +44,7 @@
       Prop: <Prop>src</Prop>,
       Type: <code>string</code>,
       Default: "—",
+      Description: "The image URL.",
     }}
   />
   <Table.Row
@@ -35,6 +52,7 @@
       Prop: <Prop>alt</Prop>,
       Type: <code>string</code>,
       Default: "—",
+      Description: "Alternative text for accessibility.",
     }}
   />
 </Table.Root>

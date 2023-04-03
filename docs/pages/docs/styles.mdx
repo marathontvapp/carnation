@@ -42,7 +42,7 @@ module.exports = {
 };
 ```
 
-```tsx filename="packages/ui/Button.tsx"
+```tsx filename="packages/ui/components/Button.tsx"
 <c.button className="text-dark bg-light">
   <c.svg className="fill-emerald-500">...</c.svg>
 </c.button>
@@ -65,7 +65,7 @@ module.exports = {
 };
 ```
 
-```tsx filename="packages/ui/Article.tsx"
+```tsx filename="packages/ui/components/Article.tsx"
 <c.article>
   <c.h1 className="font-merriweather text-4xl">...</c.h1>
   <c.p className="font-graphik text-lg">...</c.p>
@@ -113,7 +113,7 @@ For **React Native**, the process for loading fonts differs between iOS and Andr
 
 We can define reusable icons using the SVG primitives exported from the main Carnation package.
 
-```tsx filename="packages/ui/BugIcon.tsx"
+```tsx filename="packages/ui/icons/BugIcon.tsx"
 import { c } from "carnation";
 
 export interface BugIconProps {
@@ -139,7 +139,7 @@ export function BugIcon(props: BugIconProps) {
 }
 ```
 
-```tsx filename="packages/ui/ReportBugButton.tsx"
+```tsx filename="packages/ui/components/ReportBugButton.tsx"
 <Button icon={<BugIcon className="text-black dark:text-white" />}>
   Report bug
 </Button>
@@ -183,7 +183,7 @@ const breeze: SpringTransition = {
 export const SPRING = Object.freeze({ breeze });
 ```
 
-```tsx filename="packages/ui/Example.tsx"
+```tsx filename="packages/ui/components/Example.tsx"
 import { m } from "carnation/motion";
 import { DURATION, EASE, SPRING } from "./motion";
 

@@ -1,0 +1,106 @@
+# Link
+
+```tsx
+<c.a href="/series/1396">
+  <c.span>Breaking Bad</c.span>
+</c.a>
+```
+
+The `<c.a>` component links users to new screens within your app.
+
+## Configuration
+
+### Web
+
+On the web, by default we will render an `<a>` element. If you're using a framework like [Next.js](https://nextjs.org/), you can substitute the default-rendered element by passing it to `CarnationProvider`:
+
+```tsx filename="apps/native/pages/_app.tsx"
+import Link from "next/link";
+import { CarnationConfig, CarnationProvider } from "carnation";
+
+export default function App({ Component, pageProps }: AppProps) {
+  const config: CarnationConfig = {
+    link: {
+      component: Link,
+    },
+  };
+
+  return (
+    <CarnationProvider config={config}>
+      <Component {...pageProps} />
+    </CarnationProvider>
+  );
+}
+```
+
+### Native
+
+On native, by default we will render a `Pressable` component that routes via the `onPress` prop. Follow your navigation library's docs to pass the navigation function to `CarnationProvider`. The following example uses [Expo Router](https://expo.github.io/router/docs):
+
+```tsx filename="apps/web/app/_layout.tsx"
+import { Slot, useRouter } from "expo-router";
+import { CarnationConfig, CarnationProvider } from "carnation";
+
+export default function Layout() {
+  const router = useRouter();
+
+  const config: CarnationConfig = {
+    link: {
+      navigate(href) {
+        router.push(href);
+      },
+    },
+  };
+
+  return (
+    <CarnationProvider config={config}>
+      <Slot />
+    </CarnationProvider>
+  );
+}
+```
+
+## API Reference
+
+<Table.Root
+  columns={[
+    { title: "Prop", width: 0.2 },
+    { title: "Type", width: 0.3 },
+    { title: "Default", width: 0.15 },
+    { title: "Description", width: 0.35 },
+  ]}
+>
+  <Table.Row
+    data={{
+      Prop: <Prop>children</Prop>,
+      Type: <code>{`ReactNode | ((state: PressableState) => ReactNode)`}</code>,
+      Default: "—",
+      Description:
+        "The rendered children node. Pass a function to render based on the pressed state.",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>href</Prop>,
+      Type: <code>string</code>,
+      Default: "—",
+      Description: "The URL that the hyperlink points to.",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>target</Prop>,
+      Type: <code>"_blank" | "_parent" | "_top"</code>,
+      Default: "—",
+      Description: "Where to display the linked URL.",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>rel</Prop>,
+      Type: <code>string</code>,
+      Default: "—",
+      Description: "The relationship of the linked URL.",
+    }}
+  />
+</Table.Root>

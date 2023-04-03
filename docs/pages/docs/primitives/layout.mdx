@@ -1,5 +1,15 @@
 # Layout
 
+```tsx
+<c.nav />
+<c.main>
+  <c.ul />
+</c.main>
+<c.footer />
+```
+
+Layout primitives are concerned with defining the layout for a component, pattern, or screen.
+
 <Table.Root
   columns={[
     { title: "Component", width: 0.25 },
@@ -15,73 +25,82 @@
   <Table.Row
     data={{
       Component: <code>{"<c.main>"}</code>,
-      Description: "TK",
+      Description: "Represents the dominant content of a screen.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.section>"}</code>,
-      Description: "TK",
+      Description: "Represents a generic standalone section of a screen.",
+    }}
+  />
+  <Table.Row
+    data={{
+      Component: <code>{"<c.article>"}</code>,
+      Description: "Represents a self-contained composition.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.header>"}</code>,
-      Description: "TK",
+      Description: "Represents introductory content.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.nav>"}</code>,
-      Description: "TK",
+      Description:
+        "Represents a section of a screen whose purpose is to provide navigation links.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.footer>"}</code>,
-      Description: "TK",
+      Description:
+        "Represents a footer for its nearest ancestor layout element.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.aside>"}</code>,
-      Description: "TK",
+      Description:
+        "Represents a portion of a screen whose content is only indirectly related to the main content.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.ul>"}</code>,
-      Description: "TK",
+      Description: "Represents an unordered list of items.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.ol>"}</code>,
-      Description: "TK",
+      Description: "Represents an ordered list of items.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.li>"}</code>,
-      Description: "TK",
+      Description: "Represents an item in a list.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.dl>"}</code>,
-      Description: "TK",
+      Description: "Represents a description list.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.dt>"}</code>,
-      Description: "TK",
+      Description: "Specifies a term in a description list.",
     }}
   />
   <Table.Row
     data={{
       Component: <code>{"<c.dd>"}</code>,
-      Description: "TK",
+      Description: "Provides the description for the preceding term.",
     }}
   />
 </Table.Root>
@@ -90,9 +109,10 @@
 
 <Table.Root
   columns={[
-    { title: "Prop", width: 0.4 },
-    { title: "Type", width: 0.4 },
-    { title: "Default", width: 0.2 },
+    { title: "Prop", width: 0.2 },
+    { title: "Type", width: 0.3 },
+    { title: "Default", width: 0.15 },
+    { title: "Description", width: 0.35 },
   ]}
 >
   <Table.Row
@@ -100,6 +120,7 @@
       Prop: <Prop>scroll</Prop>,
       Type: <code>"vertical" | "horizontal"</code>,
       Default: "—",
+      Description: "Enables scrolling in the given direction.",
     }}
   />
 </Table.Root>

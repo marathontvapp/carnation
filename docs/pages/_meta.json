@@ -1,15 +1,17 @@
 {
-  "index": {
-    "type": "page",
-    "title": "Carnation",
-    "display": "hidden",
-    "theme": {
-      "layout": "full",
-      "timestamp": false
-    }
-  },
   "docs": {
     "type": "page",
-    "title": "Documentation"
+    "title": "Docs"
+  },
+  "changelog": {
+    "type": "page",
+    "title": "Changelog"
+  },
+  "blog": {
+    "type": "page",
+    "title": "Blog",
+    "theme": {
+      "toc": false
+    }
   }
 }

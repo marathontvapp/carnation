@@ -1,12 +1,11 @@
 {
-  "index": "Introduction",
-  "background": "Background",
-  "guides": {
-    "title": "Guides",
+  "index": {
+    "title": "Introduction",
     "theme": {
-      "collapsed": true
+      "breadcrumb": false
     }
   },
+  "background": "Background",
   "Building Design Systems": {
     "type": "separator",
     "title": "Building Design Systems"

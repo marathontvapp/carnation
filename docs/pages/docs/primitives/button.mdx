@@ -1,33 +1,30 @@
 # Button
 
-<Table.Root
-  columns={[
-    { title: "Component", width: 0.25 },
-    { title: "Description", width: 0.75 },
-  ]}
->
-  <Table.Row
-    data={{
-      Component: <code>{"<c.button>"}</code>,
-      Description: "TK",
-    }}
-  />
-</Table.Root>
+```tsx
+<c.button onPress={signIn}>
+  <c.span>Sign in</c.span>
+</c.button>
+```
+
+The `<c.button>` component performs an action when pressed by the user.
 
 ## API Reference
 
 <Table.Root
   columns={[
-    { title: "Prop", width: 0.4 },
-    { title: "Type", width: 0.4 },
-    { title: "Default", width: 0.2 },
+    { title: "Prop", width: 0.2 },
+    { title: "Type", width: 0.3 },
+    { title: "Default", width: 0.15 },
+    { title: "Description", width: 0.35 },
   ]}
 >
   <Table.Row
     data={{
       Prop: <Prop>children</Prop>,
-      Type: <code>{`ReactNode | (state: PressableState) => ReactNode`}</code>,
+      Type: <code>{`ReactNode | ((state: PressableState) => ReactNode)`}</code>,
       Default: "—",
+      Description:
+        "The rendered children node. Pass a function to render based on the pressed state.",
     }}
   />
   <Table.Row
@@ -35,6 +32,7 @@
       Prop: <Prop>disabled</Prop>,
       Type: <code>boolean</code>,
       Default: <code>false</code>,
+      Description: "Makes the element not mutable or focusable.",
     }}
   />
   <Table.Row
@@ -42,6 +40,7 @@
       Prop: <Prop>onPress</Prop>,
       Type: <code>{`(evt: any) => void`}</code>,
       Default: "—",
+      Description: "Event handler for the press event.",
     }}
   />
 </Table.Root>

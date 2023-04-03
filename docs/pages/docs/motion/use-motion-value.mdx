@@ -1,0 +1,28 @@
+# useMotionValue
+
+<Callout type="warning" emoji="🚧">
+  This page is under construction.
+</Callout>
+
+```tsx
+import { c } from "carnation";
+import { m, useMotionValue } from "carnation/motion";
+
+function Component() {
+  const translateX = useMotionValue(0);
+
+  return (
+    <c.div>
+      <m.div style={{ translateX }} />
+
+      <c.button
+        onPress={() => {
+          translateX.set(Math.random() * 100);
+        }}
+      >
+        <c.span>Move</c.span>
+      </c.button>
+    </c.div>
+  );
+}
+```

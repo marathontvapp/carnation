@@ -1,3 +1,137 @@
 # Primitives
 
-TK
+<Callout type="warning" emoji="🚧">
+  This page is under construction.
+</Callout>
+
+```tsx
+<c.article>
+  <c.h1>Hey, Little Songbird</c.h1>
+  <c.p>
+    by <c.a href="/author/hades">Hades</c.a>
+  </c.p>
+
+  <c.button onPress={play}>
+    <c.span>Play</c.span>
+  </c.button>
+</c.article>
+```
+
+## API Reference
+
+The following props are available on all primitive components (except `<c.svg>` child components).
+
+<Table.Root
+  columns={[
+    { title: "Prop", width: 0.2 },
+    { title: "Type", width: 0.3 },
+    { title: "Default", width: 0.15 },
+    { title: "Description", width: 0.35 },
+  ]}
+>
+  <Table.Row
+    data={{
+      Prop: <Prop>className</Prop>,
+      Type: <code>string</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>id</Prop>,
+      Type: <code>string</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>role</Prop>,
+      Type: <code>"tablist" | "tab" | "tabpanel"</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>tabIndex</Prop>,
+      Type: <code>0 | -1</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaHidden</Prop>,
+      Type: <code>boolean</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaLabel</Prop>,
+      Type: <code>string</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaLabelledBy</Prop>,
+      Type: <code>string</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaModal</Prop>,
+      Type: <code>boolean</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaControls</Prop>,
+      Type: <code>string</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaBusy</Prop>,
+      Type: <code>boolean</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaChecked</Prop>,
+      Type: <code>boolean | "mixed"</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaDisabled</Prop>,
+      Type: <code>boolean</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaExpanded</Prop>,
+      Type: <code>boolean</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaSelected</Prop>,
+      Type: <code>boolean</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>ariaCurrent</Prop>,
+      Type: <code>"page"</code>,
+      Default: "—",
+    }}
+  />
+</Table.Root>

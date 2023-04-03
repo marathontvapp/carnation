@@ -2,5 +2,7 @@
   "layout": "Layout",
   "text": "Text",
   "image": "Image",
-  "button": "Button"
+  "link": "Link",
+  "button": "Button",
+  "svg": "SVG"
 }

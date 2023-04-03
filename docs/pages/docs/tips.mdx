@@ -1,5 +1,9 @@
 # Tips
 
+<Callout type="warning" emoji="🚧">
+  This page is under construction.
+</Callout>
+
 ## Prefer `children` over props
 
 On the web, text can appear anywhere in the DOM. On native, text can only appear in `Text` components (or otherwise you'll receive a fatal error).
@@ -36,4 +40,37 @@ export function Button({ children }: ButtonProps) {
     </c.button>
   );
 }
+```
+
+## Customizing accessibility components
+
+Our accessibility components are built with customization in mind. We recommend wrapping our components with those from your design system and re-exporting for use in your apps:
+
+```tsx filename="packages/ui/components/Tabs.tsx"
+import type { PropsWithChildren } from "react";
+import { Tabs } from "carnation/a11y";
+import { Button } from "./Button";
+
+export const Root = Tabs.Root;
+
+export interface ListProps extends PropsWithChildren {
+  label: string;
+}
+export function List({ children, label }: ListProps) {
+  return <Tabs.List ariaLabel={label}>{children}</Tabs.List>;
+}
+
+export interface TriggerProps<T extends Tabs.Identifier> {
+  children: string;
+  value: T;
+}
+export function Trigger({ children, value }: TriggerProps) {
+  return (
+    <Tabs.Trigger asChild value={value}>
+      <Button>{children}</Button>
+    </Tabs.Trigger>
+  );
+}
+
+export const Content = Tabs.Content;
 ```

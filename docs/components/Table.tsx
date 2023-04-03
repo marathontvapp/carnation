@@ -21,7 +21,7 @@ export function Root({ children, columns }: RootProps) {
       <div className="mt-6 relative overflow-x-auto">
         <table className="w-full table-auto text-left">
           <thead>
-            <tr className="border-b dark:border-gray-700">
+            <tr className="border-b dark:border-neutral-800">
               {columns.map((column) => (
                 <th
                   key={column.title}
@@ -35,7 +35,7 @@ export function Root({ children, columns }: RootProps) {
             </tr>
           </thead>
 
-          <tbody className="divide-y dark:divide-gray-700">{children}</tbody>
+          <tbody className="divide-y dark:divide-neutral-800">{children}</tbody>
         </table>
       </div>
     </TableContext.Provider>
