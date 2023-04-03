@@ -13,6 +13,8 @@
   },
   "getting-started": "Getting Started",
   "styles": "Styles",
+  "components": "Components",
+  "patterns": "Patterns",
   "API": {
     "type": "separator",
     "title": "API"
@@ -20,5 +22,5 @@
   "styling": "Styling",
   "primitives": "Primitives",
   "motion": "Motion",
-  "components": "Components"
+  "accessibility": "Accessibility"
 }

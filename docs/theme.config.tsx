@@ -28,14 +28,14 @@ const config: DocsThemeConfig = {
     link: "https://github.com/marathontvapp/carnation",
   },
   useNextSeoProps() {
-    const { asPath } = useRouter();
-    if (asPath === "/") {
+    const { pathname } = useRouter();
+    if (pathname === "/") {
       return {
         title: "Carnation",
       };
     } else {
       return {
-        titleTemplate: "%s - Carnation",
+        titleTemplate: "%s | Carnation",
       };
     }
   },

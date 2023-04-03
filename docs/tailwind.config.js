@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       aspectRatio: {
-        wordmark: "122 / 16",
+        wordmark: "113 / 16",
       },
     },
   },

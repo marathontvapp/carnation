@@ -4,10 +4,10 @@ As with all design systems, you must first define your styles that your componen
 
 <Callout type="info">
   In Carnation, your Tailwind config will serve as the single source of truth
-  for the big two of your design system styles: color and typography. In the
-  following examples, we will define our tokens in the root `theme` config to
-  override the default config values. If you'd rather keep the default Tailwind
-  config as well, drop the following into `theme.extend`.
+  for color and typography. In the following examples, we will define our tokens
+  in the root `theme` config to override the default config values. If you'd
+  rather keep the default Tailwind config as well, drop the following into
+  `theme.extend`.
 </Callout>
 
 ## Color
@@ -15,8 +15,8 @@ As with all design systems, you must first define your styles that your componen
 Let's start by defining your color tokens in `tailwind.config.js`. Once defined, we can use them wherever colors can be applied, such as text, fill, and background colors.
 
 <Callout type="warning">
-  Avoid using named colors like `transparent` and `currentColor` in values as
-  these won't transfer nicely to native. Rather, use [8-digit hex
+  Avoid using named color values like `transparent` and `currentColor` in tokens
+  as these won't transfer nicely to native. Rather, use [8-digit hex
   codes](https://css-tricks.com/8-digit-hex-codes/) to bake-in opacity (e.g.,
   `#ffffff00`) and [React
   context](https://react.dev/learn/passing-data-deeply-with-context) to pass
@@ -44,7 +44,7 @@ module.exports = {
 
 ```tsx filename="packages/ui/Button.tsx"
 <c.button className="text-dark bg-light">
-  <c.svg className="fill-emerald-400">...</c.svg>
+  <c.svg className="fill-emerald-500">...</c.svg>
 </c.button>
 ```
 
@@ -166,12 +166,11 @@ const slow = 0.6;
 
 export const DURATION = Object.freeze({ fast, normal, slow });
 
-const linear: BezierDefinition = [0, 0, 1, 1];
 const easeIn: BezierDefinition = [0.7, 0, 0.84, 0];
 const easeOut: BezierDefinition = [0.16, 1, 0.3, 1];
 const easeInOut: BezierDefinition = [0.87, 0, 0.13, 1];
 
-export const EASE = Object.freeze({ linear, easIn, easeOut, easeInOut });
+export const EASE = Object.freeze({ easeIn, easeOut, easeInOut });
 
 const breeze: SpringTransition = {
   type: "spring",
@@ -201,7 +200,3 @@ import { DURATION, EASE, SPRING } from "./motion";
   }}
 />;
 ```
-
-## Haptics
-
-TK

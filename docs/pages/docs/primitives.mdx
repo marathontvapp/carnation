@@ -15,12 +15,7 @@ export interface ButtonProps {
 
 export function Button() {
   return (
-    <c.button
-      className="flex"
-      disabled={disabled}
-      onPress={onPress}
-      ariaBusy={busy}
-    >
+    <c.button disabled={disabled} onPress={onPress} ariaBusy={busy}>
       {busy && <ActivityIndicator />}
       <c.span>{children}</c.span>
     </c.button>

@@ -61,11 +61,11 @@ Beyond exposing semantic components and ARIA props, we also take inspiration fro
 
 ```tsx
 <Tabs.Root>
-  <Tabs.List>
-    <Tabs.Trigger value="seasons">Seasons</Tabs.Trigger>
-    <Tabs.Trigger value="episodes">Episodes</Tabs.Trigger>
+  <Tabs.List ariaLabel="Feeds">
+    <Tabs.Trigger value="following">Following</Tabs.Trigger>
+    <Tabs.Trigger value="explore">Explore</Tabs.Trigger>
   </Tabs.List>
-  <Tabs.Content value="seasons">...</Tabs.Content>
-  <Tabs.Content value="episodes">...</Tabs.Content>
+  <Tabs.Content value="following">...</Tabs.Content>
+  <Tabs.Content value="explore">...</Tabs.Content>
 </Tabs.Root>
 ```
