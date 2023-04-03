@@ -56,7 +56,7 @@ const config: DocsThemeConfig = {
   },
   useNextSeoProps() {
     const { pathname } = useRouter();
-    if (pathname === "/") {
+    if (pathname === "/docs") {
       return {
         title: "Carnation",
         titleTemplate: "%s",
