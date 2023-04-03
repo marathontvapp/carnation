@@ -15,6 +15,7 @@
   "styles": "Styles",
   "components": "Components",
   "patterns": "Patterns",
+  "tips": "Tips",
   "API": {
     "type": "separator",
     "title": "API"

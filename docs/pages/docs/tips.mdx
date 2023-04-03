@@ -1,0 +1,39 @@
+# Tips
+
+## Prefer `children` over props
+
+On the web, text can appear anywhere in the DOM. On native, text can only appear in `Text` components (or otherwise you'll receive a fatal error).
+
+To bring your component API closer to a web-feel, we recommend exposing text content as `children` rather than exposing a separate prop which expects a string:
+
+<div className="grid grid-cols-2 gap-x-6 mt-6 max-md:grid-cols-1">
+  <div>
+    ```tsx filename="Don't do this..."
+    <Button title="Report bug" />
+    ```
+  </div>
+
+  <div>
+    ```tsx filename="Do this!"
+    <Button>Report bug</Button>
+    ```
+  </div>
+</div>
+
+How do we resolve the native error? Simply, we ensure our `children` are wrapped in a `c.span` component:
+
+```tsx filename="packages/ui/components/Button.tsx"
+import { c } from "carnation";
+
+export interface ButtonProps {
+  children: string;
+}
+
+export function Button({ children }: ButtonProps) {
+  return (
+    <c.button>
+      <c.span>{children}</c.span>
+    </c.button>
+  );
+}
+```
