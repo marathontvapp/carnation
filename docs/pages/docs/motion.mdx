@@ -1,3 +1,27 @@
 # Motion
 
 TK
+
+```tsx filename="packages/ui/ActivityIndicator.tsx"
+import { m } from "carnation/motion";
+import LoadingIcon from "./LoadingIcon";
+
+export function ActivityIndicator() {
+  return (
+    <m.div
+      ariaLabel="Loading..."
+      initial={{ rotate: 0 }}
+      animate={{ rotate: 360 }}
+      transition={{
+        type: "timing",
+        ease: "linear",
+        duration: 0.75,
+        repeat: Infinity,
+        repeatType: "loop",
+      }}
+    >
+      <LoadingIcon />
+    </m.div>
+  );
+}
+```

@@ -28,6 +28,8 @@ Unlike other universal design system frameworks, Carnation is web-first. No more
 </c.article>
 ```
 
+Check out the [Primitives](/docs/primitives) section for more about our core components.
+
 ### Tailwind-first
 
 Carnation leverages the power of [Tailwind CSS](https://tailwindcss.com/) to make defining the styles of your universal design system easy. On native, Tailwind classes are compiled at build time to native `StyleSheet`s via [NativeWind](https://www.nativewind.dev/).
@@ -47,7 +49,7 @@ Carnation brings a universal API for motion to design systems, brought to you by
   ariaLabel="Loading..."
   initial={{ rotate: 0 }}
   animate={{ rotate: 360 }}
-  transition={{ type: "timing", ease: "linear" }}
+  transition={{ type: "timing", ease: "linear", repeat: Infinity }}
 >
   <LoadingIcon />
 </m.div>

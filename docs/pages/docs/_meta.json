@@ -1,15 +1,24 @@
 {
   "index": "Introduction",
   "background": "Background",
+  "guides": {
+    "title": "Guides",
+    "theme": {
+      "collapsed": true
+    }
+  },
+  "Building Design Systems": {
+    "type": "separator",
+    "title": "Building Design Systems"
+  },
   "getting-started": "Getting Started",
-  "-": {
-    "type": "separator"
+  "styles": "Styles",
+  "API": {
+    "type": "separator",
+    "title": "API"
   },
-  "core": "Core",
+  "styling": "Styling",
+  "primitives": "Primitives",
   "motion": "Motion",
-  "components": "Components",
-  "--": {
-    "type": "separator"
-  },
-  "api": "API"
+  "components": "Components"
 }

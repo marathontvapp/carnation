@@ -1,0 +1,207 @@
+# Styles
+
+As with all design systems, you must first define your styles that your components will later use.
+
+<Callout type="info">
+  In Carnation, your Tailwind config will serve as the single source of truth
+  for the big two of your design system styles: color and typography. In the
+  following examples, we will define our tokens in the root `theme` config to
+  override the default config values. If you'd rather keep the default Tailwind
+  config as well, drop the following into `theme.extend`.
+</Callout>
+
+## Color
+
+Let's start by defining your color tokens in `tailwind.config.js`. Once defined, we can use them wherever colors can be applied, such as text, fill, and background colors.
+
+<Callout type="warning">
+  Avoid using named colors like `transparent` and `currentColor` in values as
+  these won't transfer nicely to native. Rather, use [8-digit hex
+  codes](https://css-tricks.com/8-digit-hex-codes/) to bake-in opacity (e.g.,
+  `#ffffff00`) and [React
+  context](https://react.dev/learn/passing-data-deeply-with-context) to pass
+  color data to children components.
+</Callout>
+
+```js filename="tailwind.config.js"
+module.exports = {
+  theme: {
+    colors: {
+      clear: "#ffffff00",
+      dark: "#141414",
+      light: "#efefef",
+      emerald: {
+        50: "#ecfdf5",
+        100: "#d1fae5",
+        // ...
+        800: "#065f46",
+        900: "#064e3b",
+      },
+    },
+  },
+};
+```
+
+```tsx filename="packages/ui/Button.tsx"
+<c.button className="text-dark bg-light">
+  <c.svg className="fill-emerald-400">...</c.svg>
+</c.button>
+```
+
+For more information on customizng colors, check out Tailwind CSS's [colors guide](https://tailwindcss.com/docs/customizing-colors).
+
+## Typography
+
+Next, let's define your typography tokens in `tailwind.config.js`. Once defined, we can use them wherever content is present, including headings and paragraphs.
+
+```js filename="tailwind.config.js"
+module.exports = {
+  theme: {
+    fontFamily: {
+      graphik: ["Graphik"],
+      merriweather: ["Merriweather"],
+    },
+  },
+};
+```
+
+```tsx filename="packages/ui/Article.tsx"
+<c.article>
+  <c.h1 className="font-merriweather text-4xl">...</c.h1>
+  <c.p className="font-graphik text-lg">...</c.p>
+</c.article>
+```
+
+### Defining Font Families
+
+If you're using **Next.js** on the web, you can follow Vercel's [guide for optimizing fonts](https://nextjs.org/docs/basic-features/font-optimization#with-tailwind-css). You'll notice that their Tailwind guide asks you to include a CSS variable in your Tailwind config. Since native doesn't support CSS variables yet, we'll need to add an override in our web directory:
+
+```tsx filename="tailwind.config.js"
+module.exports = {
+  theme: {
+    fontFamily: {
+      graphik: ["Graphik"],
+      merriweather: ["Merriweather"],
+    },
+  },
+};
+```
+
+```tsx filename="apps/web/tailwind.config.js"
+const defaultConfig = require("../../tailwind.config.js");
+module.exports = {
+  theme: {
+    ...defaultConfig.theme,
+    fontFamily: {
+      graphik: ["var(--graphik)"],
+      merriweather: ["var(--merriweather)"],
+    },
+  },
+};
+```
+
+For **React Native**, the process for loading fonts differs between iOS and Android. Thanks to the NativeWind documentation, we found this [React Native font demo](https://github.com/jsamr/react-native-font-demo) that helps create a more consistent experience across platforms.
+
+<Callout type="warning">
+  Please note that this requires a bare React Native project. At this time, we
+  haven't found a consistent to load fonts that plays nicely with both Tailwind
+  and the Expo managed workflow. If you find a way, please submit an issue on
+  our GitHub repo!
+</Callout>
+
+## Iconography
+
+We can define reusable icons using the SVG primitives exported from the main Carnation package.
+
+```tsx filename="packages/ui/BugIcon.tsx"
+import { c } from "carnation";
+
+export interface BugIconProps {
+  className?: string;
+}
+
+export function BugIcon(props: BugIconProps) {
+  return (
+    <c.svg
+      {...props}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <c.path
+        stroke="currentColor"
+        strokeWidth={2}
+        d="M14 11C14 12.7486 13.4922 14.2899 12.7218 15.3685C11.95 16.449 10.9739 17 10 17C9.02606 17 8.04999 16.449 7.2782 15.3685C6.50778 14.2899 6 12.7486 6 11C6 9.2514 6.50778 7.71008 7.2782 6.63149C8.04999 5.55098 9.02606 5 10 5C10.9739 5 11.95 5.55098 12.7218 6.63149C13.4922 7.71008 14 9.2514 14 11Z"
+      />
+      {/* ... */}
+    </c.svg>
+  );
+}
+```
+
+```tsx filename="packages/ui/ReportBugButton.tsx"
+<Button icon={<BugIcon className="text-black dark:text-white" />}>
+  Report bug
+</Button>
+```
+
+<Callout type="info">
+  Note that the `c.path` component can define stroke with the `currentColor`
+  value. Well, this is functionality that all other SVG-related components also
+  have (and it also works with fill!). If you pass a text color via the
+  `className` prop on the component, the `c.svg` component will pass that value
+  to its children via context.
+</Callout>
+
+## Motion
+
+Consistent motion is key to bringing your design system together. We can define reusable easings, durations, and spring configs in a constants file:
+
+```tsx filename="packages/ui/motion.ts"
+import type { SpringTransition, BezierDefinition } from "carnation/motion";
+
+const fast = 0.1;
+const normal = 0.3;
+const slow = 0.6;
+
+export const DURATION = Object.freeze({ fast, normal, slow });
+
+const linear: BezierDefinition = [0, 0, 1, 1];
+const easeIn: BezierDefinition = [0.7, 0, 0.84, 0];
+const easeOut: BezierDefinition = [0.16, 1, 0.3, 1];
+const easeInOut: BezierDefinition = [0.87, 0, 0.13, 1];
+
+export const EASE = Object.freeze({ linear, easIn, easeOut, easeInOut });
+
+const breeze: SpringTransition = {
+  type: "spring",
+  damping: 1.2,
+  mass: 0.13,
+  stiffness: 5.7,
+  velocity: 10.0,
+};
+
+export const SPRING = Object.freeze({ breeze });
+```
+
+```tsx filename="packages/ui/Example.tsx"
+import { m } from "carnation/motion";
+import { DURATION, EASE, SPRING } from "./motion";
+
+<m.div
+  initial={{ opacity: 0, translateY: -30 }}
+  animate={{ opacity: 1, translateY: 0 }}
+  transition={{
+    opacity: {
+      type: "timing",
+      ease: EASE.easeOut,
+      duration: DURATION.normal,
+    },
+    translateY: SPRING.breeze,
+  }}
+/>;
+```
+
+## Haptics
+
+TK

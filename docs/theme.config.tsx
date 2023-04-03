@@ -1,17 +1,15 @@
 import React from "react";
-import { DocsThemeConfig } from "nextra-theme-docs";
+import { Callout, DocsThemeConfig } from "nextra-theme-docs";
 import { useRouter } from "next/router";
 import { Wordmark } from "./components/Wordmark";
 
 const config: DocsThemeConfig = {
   components: {
+    Callout: Callout as any,
     Wordmark,
   },
   docsRepositoryBase:
     "https://github.com/marathontvapp/carnation/blob/main/docs",
-  editLink: {
-    text: "Edit this page",
-  },
   footer: {
     text: <span>&copy; 2023</span>,
   },
