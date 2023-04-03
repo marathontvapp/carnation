@@ -2,10 +2,14 @@ import React from "react";
 import { Callout, DocsThemeConfig } from "nextra-theme-docs";
 import { useRouter } from "next/router";
 import { Wordmark } from "./components/Wordmark";
+import { Prop } from "./components/Prop";
+import * as Table from "./components/Table";
 
 const config: DocsThemeConfig = {
   components: {
     Callout: Callout as any,
+    Prop,
+    Table: Table as any,
     Wordmark,
   },
   docsRepositoryBase:

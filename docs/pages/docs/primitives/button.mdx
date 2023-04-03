@@ -1,0 +1,47 @@
+# Button
+
+<Table.Root
+  columns={[
+    { title: "Component", width: 0.25 },
+    { title: "Description", width: 0.75 },
+  ]}
+>
+  <Table.Row
+    data={{
+      Component: <code>{"<c.button>"}</code>,
+      Description: "TK",
+    }}
+  />
+</Table.Root>
+
+## API Reference
+
+<Table.Root
+  columns={[
+    { title: "Prop", width: 0.4 },
+    { title: "Type", width: 0.4 },
+    { title: "Default", width: 0.2 },
+  ]}
+>
+  <Table.Row
+    data={{
+      Prop: <Prop>children</Prop>,
+      Type: <code>{`ReactNode | (state: PressableState) => ReactNode`}</code>,
+      Default: "—",
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>disabled</Prop>,
+      Type: <code>boolean</code>,
+      Default: <code>false</code>,
+    }}
+  />
+  <Table.Row
+    data={{
+      Prop: <Prop>onPress</Prop>,
+      Type: <code>{`(evt: any) => void`}</code>,
+      Default: "—",
+    }}
+  />
+</Table.Root>

@@ -1,24 +1,3 @@
 # Primitives
 
 TK
-
-```tsx filename="packages/ui/Button.tsx"
-import { c } from "carnation";
-import { ActivityIndicator } from "./ActivityIndicator";
-
-export interface ButtonProps {
-  busy?: boolean;
-  children: string;
-  disabled?: boolean;
-  onPress(): void;
-}
-
-export function Button() {
-  return (
-    <c.button disabled={disabled} onPress={onPress} ariaBusy={busy}>
-      {busy && <ActivityIndicator />}
-      <c.span>{children}</c.span>
-    </c.button>
-  );
-}
-```
