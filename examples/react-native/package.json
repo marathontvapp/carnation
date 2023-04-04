@@ -1,6 +1,6 @@
 {
   "name": "example-expo",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.0",
   "private": true,
   "scripts": {
     "start": "expo start --dev-client",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-    "@marathontvapp/carnation": "*",
+    "@marathontvapp/carnation": "1.0.0-alpha.0",
     "expo": "~48.0.10",
     "expo-status-bar": "~1.4.4",
     "nativewind": "^2.0.11",
