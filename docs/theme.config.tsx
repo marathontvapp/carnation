@@ -1,9 +1,10 @@
 import React from "react";
-import { Callout, DocsThemeConfig } from "nextra-theme-docs";
+import { Callout, DocsThemeConfig, Tab, Tabs } from "nextra-theme-docs";
 import { useRouter } from "next/router";
 import { Byline } from "./components/Byline";
 import { Wordmark } from "./components/Wordmark";
 import { Prop } from "./components/Prop";
+import { NPMLink } from "./components/NPMLink";
 import { Tag } from "./components/Tag";
 import Link from "next/link";
 import * as Table from "./components/Table";
@@ -27,7 +28,10 @@ const config: DocsThemeConfig = {
   components: {
     Byline,
     Callout: Callout as any,
+    NPMLink: NPMLink as any,
     Prop,
+    Tab,
+    Tabs: Tabs as any,
     Table: Table as any,
     Tag,
     Wordmark,

@@ -6,6 +6,7 @@
     }
   },
   "background": "Background",
+  "installation": "Installation",
   "Building Design Systems": {
     "type": "separator",
     "title": "Building Design Systems"
