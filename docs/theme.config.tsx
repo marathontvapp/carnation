@@ -39,7 +39,31 @@ const config: DocsThemeConfig = {
   },
   head: (
     <>
+      <meta
+        name="description"
+        content="Accessible framework for building universal React design systems."
+      />
+
       <link rel="icon" href="/favicon.ico" />
+
+      <meta property="og:locale" content="en_US" />
+      <meta property="og:type" content="website" />
+      <meta
+        name="og:description"
+        content="Accessible framework for building universal React design systems."
+      />
+      <meta property="og:site_name" content="Carnation" />
+      <meta
+        property="og:image"
+        content="https://carnation.vercel.app/og_image.png"
+      />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="675" />
+      <meta property="og:image:type" content="image/png" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:creator" content="@marathontvapp" />
+      <meta name="twitter:site" content="@marathontvapp" />
     </>
   ),
   logo: (
