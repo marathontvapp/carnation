@@ -1,5 +1,5 @@
 {
-  "name": "@marathontvapp/carnation",
+  "name": "carnation-ds",
   "description": "Accessible framework for building universal React design systems.",
   "version": "1.0.0-alpha.3",
   "license": "MIT",

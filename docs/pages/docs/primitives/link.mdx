@@ -16,7 +16,7 @@ On the web, by default we will render an `<a>` element. If you're using a framew
 
 ```tsx filename="apps/native/pages/_app.tsx"
 import Link from "next/link";
-import { CarnationConfig, CarnationProvider } from "@marathontvapp/carnation";
+import { CarnationConfig, CarnationProvider } from "carnation-ds";
 
 export default function App({ Component, pageProps }: AppProps) {
   const config: CarnationConfig = {
@@ -39,7 +39,7 @@ On native, by default we will render a `Pressable` component that routes via the
 
 ```tsx filename="apps/web/app/_layout.tsx"
 import { Slot, useRouter } from "expo-router";
-import { CarnationConfig, CarnationProvider } from "@marathontvapp/carnation";
+import { CarnationConfig, CarnationProvider } from "carnation-ds";
 
 export default function Layout() {
   const router = useRouter();

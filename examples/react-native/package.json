@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-    "@marathontvapp/carnation": "1.0.0-alpha.3",
+    "carnation-ds": "1.0.0-alpha.3",
     "expo": "~48.0.10",
     "expo-status-bar": "~1.4.4",
     "nativewind": "^2.0.11",
