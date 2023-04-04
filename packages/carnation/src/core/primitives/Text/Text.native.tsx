@@ -1,6 +1,6 @@
 import { TextProps } from "./types";
-import React, { Text as RNText } from "react-native";
-import { forwardRef } from "react";
+import { Text as RNText } from "react-native";
+import React, { forwardRef } from "react";
 import { styled } from "nativewind";
 import { TextContext } from "./context";
 import { useAriaProps } from "../../hooks/useAriaProps.native";

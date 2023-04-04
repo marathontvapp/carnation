@@ -4,7 +4,6 @@ import React, {
   FunctionComponent,
   useEffect,
   useMemo,
-  useRef,
 } from "react";
 import {
   MotionProps,
@@ -19,12 +18,14 @@ import {
   MotionStyle,
   TimingTransition,
   TimingCurves,
-  TransformTemplateFn,
+  TransformProperties,
+  TransformTemplate,
 } from "./types";
 import Animated, {
   cancelAnimation,
   Easing,
   EasingFunctionFactory,
+  runOnUI,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -53,7 +54,7 @@ export function useMotionValue<V>(initialValue: V): MotionValue<V> {
   const value = useSharedValue(initialValue);
   return useMemo(
     () => ({
-      _shared: value,
+      value,
       clearListeners() {
         // stub
       },
@@ -227,7 +228,6 @@ function useTrackedMotionValue<P extends keyof MotionProperties>(
     getTargetValue(property, props.initial, props.variants, defaultValue)
   );
 
-  const controlsRef = useRef<AnimationPlaybackControls>();
   const toValue = getTargetValue(
     property,
     props.animate,
@@ -243,13 +243,15 @@ function useTrackedMotionValue<P extends keyof MotionProperties>(
     );
 
     value.stop();
-    controlsRef.current = animate(value, toValue, transition);
+    animate(value, toValue, transition);
   }, [toValue]);
 
   return value;
 }
 
-const DEFAULT_TRANSFORM_TEMPLATE: TransformTemplateFn = function (props) {
+function DEFAULT_TRANSFORM_TEMPLATE(
+  props: TransformProperties
+): TransformTemplate {
   "worklet";
   return [
     { perspective: props.perspective ?? 0 },
@@ -265,7 +267,7 @@ const DEFAULT_TRANSFORM_TEMPLATE: TransformTemplateFn = function (props) {
     { translateX: props.translateX ?? 0 },
     { translateY: props.translateY ?? 0 },
   ];
-};
+}
 
 export function motion<Props extends object, Ref>(
   Component: ComponentType<Props>

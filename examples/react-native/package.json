@@ -1,0 +1,31 @@
+{
+  "name": "example-expo",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "workspaces": {
+    "nohoist": [
+      "expo"
+    ]
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "carnation": "*",
+    "expo": "~48.0.10",
+    "expo-status-bar": "~1.4.4",
+    "nativewind": "^2.0.11",
+    "react": "18.2.0",
+    "react-native": "0.71.6",
+    "react-native-reanimated": "^3.0.2",
+    "expo-splash-screen": "~0.18.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "tailwindcss": "^3.3.1"
+  },
+  "private": true
+}

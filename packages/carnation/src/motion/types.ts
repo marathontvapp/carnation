@@ -93,7 +93,7 @@ export interface Variants {
 export type MotionValue<V> = Omit<
   FMMotionValue<V>,
   "events" | "clearAnimation"
-> & { _shared: { value: V } };
+>;
 
 export interface AnimationPlaybackControls {
   cancel: () => void;
