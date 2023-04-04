@@ -37,7 +37,6 @@
     "clsx": "^1.2.1",
     "framer-motion": "^10.10.0",
     "nativewind": "^2.0.11",
-    "next": "^13.2.4",
     "react": "^18.2.0",
     "react-aria": "^3.23.1",
     "react-native": "^0.71.6",

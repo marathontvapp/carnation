@@ -1,18 +1,23 @@
 import React, { forwardRef } from "react";
 import { LinkProps } from "./types";
 import { usePress } from "react-aria";
-import NextLink from "next/link";
 import { useAriaProps } from "../../hooks";
+import { useConfig } from "../../context";
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { children, className, href, id, target, rel, ...props },
   ref
 ) {
+  const config = useConfig();
+
   const ariaProps = useAriaProps(props);
+
   const { pressProps, isPressed } = usePress({});
 
+  const Component = config.link?.component ?? "a";
+
   return (
-    <NextLink
+    <Component
       {...pressProps}
       ref={ref}
       id={id}
@@ -25,6 +30,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {typeof children === "function"
         ? children({ pressed: isPressed })
         : children}
-    </NextLink>
+    </Component>
   );
 });

@@ -4,12 +4,15 @@ import { LinkProps } from "./types";
 import { styled } from "nativewind";
 import { TextContext } from "../Text/context";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
+import { useConfig } from "../../context";
 
 export const Link = styled(
   forwardRef<View, LinkProps & { style?: any }>(function Link(
     { children, href, id, style, ...props },
     ref
   ) {
+    const config = useConfig();
+
     const ariaProps = useAriaProps(props);
 
     const textCtx = useContext(TextContext);
@@ -21,7 +24,7 @@ export const Link = styled(
           Linking.openURL(href);
         }
       } else {
-        // linkTo(href);
+        config.link?.navigate?.(href);
       }
     }
 

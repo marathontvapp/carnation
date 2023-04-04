@@ -1,6 +1,7 @@
 export { c } from "./core";
-export { AccessibilityProvider, useAccessibility } from "./core/context";
+export { CarnationProvider, useAccessibility } from "./core/context";
 
+export type { Config as CarnationConfig } from "./core/context";
 export type {
   AccessibilityProps,
   ElementProps,

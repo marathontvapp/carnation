@@ -19,6 +19,10 @@ export default function Home() {
       >
         I'm spinning!
       </m.p>
+
+      <c.a href="/page2">
+        <c.span>Go to page 2</c.span>
+      </c.a>
     </c.div>
   );
 }
