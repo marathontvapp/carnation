@@ -11,7 +11,8 @@
     "lib/",
     "src/",
     "motion.js",
-    "motion.d.ts"
+    "motion.d.ts",
+    "README.md"
   ],
   "sideEffects": false,
   "react-native-builder-bob": {
