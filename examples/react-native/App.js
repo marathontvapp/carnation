@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { c } from "carnation";
-import { m } from "carnation/motion";
+import { c } from "@marathontvapp/carnation";
+import { m } from "@marathontvapp/carnation/motion";
 import { useState } from "react";
 
 export default function App() {

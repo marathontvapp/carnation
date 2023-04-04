@@ -1,5 +1,5 @@
-import { c } from "carnation";
-import { m } from "carnation/motion";
+import { c } from "@marathontvapp/carnation";
+import { m } from "@marathontvapp/carnation/motion";
 
 export default function Home() {
   return (
