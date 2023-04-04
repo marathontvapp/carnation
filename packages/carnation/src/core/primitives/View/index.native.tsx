@@ -1,6 +1,6 @@
-import { View } from "./View";
+import { View } from "./View.native";
 import { TaggedViewProps } from "./types";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import type { View as RNView, ScrollView as RNScrollView } from "react-native";
 
 export const div = forwardRef<RNView | RNScrollView, TaggedViewProps>(

@@ -1,5 +1,5 @@
 import NextImage from "next/image";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { useAriaProps } from "../../hooks";
 import { ImageProps } from "./types";
 

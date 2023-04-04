@@ -1,5 +1,5 @@
 import { TextProps } from "./types";
-import { Text as RNText } from "react-native";
+import React, { Text as RNText } from "react-native";
 import { forwardRef } from "react";
 import { styled } from "nativewind";
 import { TextContext } from "./context";

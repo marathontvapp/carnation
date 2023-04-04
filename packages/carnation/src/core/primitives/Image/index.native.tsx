@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { Image as RNImage } from "react-native";
 import { ImageProps } from "./types";
 import { useAriaProps } from "../../hooks/useAriaProps.native";

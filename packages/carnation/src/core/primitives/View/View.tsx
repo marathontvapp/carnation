@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { ViewProps } from "./types";
 import { useAriaProps } from "../../hooks";
 import clsx from "clsx";

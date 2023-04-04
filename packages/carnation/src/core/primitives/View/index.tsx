@@ -1,6 +1,6 @@
 import { View } from "./View";
 import { TaggedViewProps } from "./types";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 
 export const div = forwardRef<HTMLDivElement, TaggedViewProps>(function div(
   props,

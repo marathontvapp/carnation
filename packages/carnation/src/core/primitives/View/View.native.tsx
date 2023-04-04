@@ -1,6 +1,6 @@
 import { ViewProps } from "./types";
 import { View as RNView, ScrollView as RNScrollView } from "react-native";
-import { ForwardedRef, forwardRef } from "react";
+import React, { ForwardedRef, forwardRef } from "react";
 import { styled } from "nativewind";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
 

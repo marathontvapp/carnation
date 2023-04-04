@@ -14,7 +14,7 @@ import {
   Line as RNLine,
 } from "react-native-svg";
 import { styled } from "nativewind";
-import { createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
 
 const SvgContext = createContext({ color: "" });
@@ -54,21 +54,25 @@ export const svg = styled(function Svg({
 });
 
 export function path(props: PathProps) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const style = useSvgStyle(props);
   return <RNPath {...props} {...style} />;
 }
 
 export function circle(props: CircleProps) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const style = useSvgStyle(props);
   return <RNCircle {...props} {...style} />;
 }
 
 export function rect(props: RectProps) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const style = useSvgStyle(props);
   return <RNRect {...props} {...style} />;
 }
 
 export function line(props: LineProps) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const style = useSvgStyle(props);
   return <RNLine {...props} {...style} />;
 }

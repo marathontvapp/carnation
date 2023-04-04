@@ -1,4 +1,4 @@
-import { ComponentType } from "react";
+import type { ComponentType } from "react";
 import type { MotionValue as FMMotionValue } from "framer-motion";
 
 export interface TransformProperties {

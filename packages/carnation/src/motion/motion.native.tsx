@@ -1,4 +1,4 @@
-import {
+import React, {
   ComponentType,
   forwardRef,
   FunctionComponent,
@@ -87,6 +87,7 @@ export function useMotionValue<V>(initialValue: V): MotionValue<V> {
       },
       on() {
         // stub
+        return () => {};
       },
       set(v) {
         "worklet";

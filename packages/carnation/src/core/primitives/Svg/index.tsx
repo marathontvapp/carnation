@@ -1,3 +1,4 @@
+import React from "react";
 import { useAriaProps } from "../../hooks";
 import {
   SvgProps,
@@ -8,6 +9,7 @@ import {
 } from "./types";
 
 export function svg({ children, className, id, viewBox, ...props }: SvgProps) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const ariaProps = useAriaProps(props);
   return (
     <svg

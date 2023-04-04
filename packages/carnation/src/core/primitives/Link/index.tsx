@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { LinkProps } from "./types";
 import { usePress } from "react-aria";
 import NextLink from "next/link";

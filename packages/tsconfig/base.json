@@ -2,6 +2,11 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "compilerOptions": {
+    "strict": true,
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "target": "esnext",
+    "moduleResolution": "node",
     "composite": false,
     "declaration": true,
     "declarationMap": true,
@@ -9,16 +14,10 @@
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "jsx": "react-jsx",
-    "lib": ["ES2015"],
-    "module": "ESNext",
-    "target": "es6"
+    "skipLibCheck": true
   },
   "exclude": ["node_modules"]
 }

@@ -1,10 +1,32 @@
 {
   "name": "carnation",
+  "description": "Accessible framework for building universal React design systems.",
   "version": "0.0.0",
-  "main": "./src/index.ts",
-  "react-native": "./src/index.ts",
-  "types": "./src/index.ts",
   "license": "MIT",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "react-native": "src/index",
+  "types": "lib/typescript/index.d.ts",
+  "files": [
+    "lib/",
+    "src/",
+    "motion.js",
+    "motion.d.ts"
+  ],
+  "sideEffects": false,
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "scripts": {
+    "build": "bob build",
+    "prepack": "yarn"
+  },
   "devDependencies": {
     "@types/react": "^18.0.22",
     "clsx": "^1.2.1",
@@ -14,6 +36,7 @@
     "react": "^18.2.0",
     "react-aria": "^3.23.1",
     "react-native": "^0.71.6",
+    "react-native-builder-bob": "^0.20.4",
     "react-native-reanimated": "^3.0.2",
     "react-native-svg": "^13.8.0",
     "tailwindcss": "^3.2.7",
@@ -23,8 +46,8 @@
   },
   "peerDependencies": {
     "framer-motion": "^10.10.0",
-    "react": "^18.2.0",
-    "react-native": "^0.71.6",
+    "react": "*",
+    "react-native": "*",
     "react-native-reanimated": "^3.0.2"
   }
 }

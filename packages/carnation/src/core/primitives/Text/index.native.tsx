@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { Text as RNText } from "react-native";
-import { View } from "../View/View";
-import { Text } from "./Text";
+import { View } from "../View/View.native";
+import { Text } from "./Text.native";
 import { TaggedTextProps } from "./types";
 
 export const small = forwardRef<RNText, TaggedTextProps>(function small(

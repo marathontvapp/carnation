@@ -3,7 +3,7 @@ import {
   motion as _motion,
   useMotionValue as _useMotionValue,
 } from "framer-motion";
-import { ComponentType, forwardRef } from "react";
+import React, { ComponentType, forwardRef } from "react";
 import {
   AnimatableValue,
   AnimateFn,

@@ -1,4 +1,4 @@
-import { forwardRef, useContext } from "react";
+import React, { forwardRef, useContext } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
 import { LinkProps } from "./types";
 import { styled } from "nativewind";

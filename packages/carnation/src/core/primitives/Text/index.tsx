@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { Text } from "./Text";
 import { TaggedTextProps } from "./types";
 

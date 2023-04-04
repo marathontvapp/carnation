@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
-import { ElementProps } from "../types";
+import type { PropsWithChildren } from "react";
+import type { ElementProps } from "../types";
 
 export interface ViewProps extends PropsWithChildren, ElementProps {
   scroll?: "horizontal" | "vertical";

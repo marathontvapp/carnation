@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AccessibilityInfo } from "react-native";
 import { AccessibilityContext } from "./context";
 import { AccessibilityProviderProps } from "./types";
