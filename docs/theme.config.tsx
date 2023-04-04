@@ -17,7 +17,7 @@ const config: DocsThemeConfig = {
         Carnation is now in early alpha.{" "}
         <Link
           className="inline-flex items-center font-semibold"
-          href="/blog/2023-04-03-introducing-carnation"
+          href="/blog/2023-04-04-introducing-carnation"
         >
           Read more <ArrowRightIcon className="w-4 h-4" />
         </Link>
