@@ -10,7 +10,8 @@
   "release-it": {
     "plugins": {
       "@release-it-plugins/workspaces": true
-    }
+    },
+    "npm": false
   },
   "scripts": {
     "build": "turbo run build",
