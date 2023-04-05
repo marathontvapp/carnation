@@ -1,22 +1,25 @@
-import NextImage from "next/image";
 import React, { forwardRef } from "react";
 import { useAriaProps } from "../../hooks";
 import { ImageProps } from "./types";
+import { useConfig } from "../../context";
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
-  { alt, className, fill, id, src, ...props },
+  { alt, className, id, src, ...props },
   ref
 ) {
+  const config = useConfig();
+
   const ariaProps = useAriaProps(props);
+
+  const Component = config.image?.component ?? "img";
+
   return (
-    <NextImage
+    <Component
       ref={ref}
       id={id}
       className={className}
       src={src}
       alt={alt}
-      fill={fill}
-      unoptimized
       {...ariaProps}
     />
   );

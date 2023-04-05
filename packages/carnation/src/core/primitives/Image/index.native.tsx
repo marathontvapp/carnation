@@ -2,30 +2,31 @@ import React, { forwardRef } from "react";
 import { Image as RNImage } from "react-native";
 import { ImageProps } from "./types";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
+import { useConfig } from "../../context";
 
 export const Image = forwardRef<RNImage, ImageProps & { style?: any }>(
-  function Image({ alt, fill, src, style, ...props }, ref) {
-    const ariaProps = useAriaProps({
-      ...props,
-      ariaLabel: props.ariaLabel ?? alt,
-    });
+  function Image({ alt, src, style, ...props }, ref) {
+    const config = useConfig();
+
+    const ariaProps = useAriaProps(props);
+
+    const Component =
+      config.image?.component ??
+      (({ src, ...props }) => (
+        <RNImage
+          source={{ uri: src }}
+          accessibilityIgnoresInvertColors
+          accessibilityLabel={ariaProps.accessibilityLabel ?? alt}
+          {...props}
+        />
+      ));
 
     return (
-      <RNImage
-        ref={ref}
-        style={[
-          style,
-          fill && {
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-          },
-        ]}
-        source={{ uri: src }}
+      <Component
+        {...{ ref, style: [style] }}
+        src={src}
+        alt={alt}
         {...ariaProps}
-        accessibilityIgnoresInvertColors
       />
     );
   }

@@ -5,6 +5,9 @@ export interface Config {
     component?: ComponentType<{ href: any }>;
     navigate?(href: string): void;
   };
+  image?: {
+    component?: ComponentType<{ src: any; alt: any }>;
+  };
 }
 
 export interface ConfigProviderProps extends PropsWithChildren {

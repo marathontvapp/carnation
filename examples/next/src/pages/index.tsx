@@ -20,6 +20,10 @@ export default function Home() {
         I'm spinning!
       </m.p>
 
+      <c.div className="relative w-28 h-28">
+        <c.img src="/vercel.svg" alt="Vercel" />
+      </c.div>
+
       <c.a href="/page2">
         <c.span>Go to page 2</c.span>
       </c.a>
