@@ -18,7 +18,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "release": "release-it"
+    "release": "yarn build --filter=carnation-ds && release-it"
   },
   "devDependencies": {
     "@release-it-plugins/workspaces": "^3.2.0",
