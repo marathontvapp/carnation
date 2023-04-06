@@ -12,7 +12,7 @@ export const Image = forwardRef<RNImage, ImageProps & { style?: any }>(
 
     const Component =
       config.image?.component ??
-      (({ src, ...props }) => (
+      (({ src, alt, ...props }) => (
         <RNImage
           source={{ uri: src }}
           accessibilityIgnoresInvertColors
