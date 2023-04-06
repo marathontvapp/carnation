@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -21,6 +21,6 @@
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.1",
     "typescript": "^5.0.3",
-    "tsconfig": "1.0.0-alpha.6"
+    "tsconfig": "1.0.0-alpha.7"
   }
 }
