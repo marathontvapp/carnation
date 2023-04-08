@@ -12,11 +12,15 @@ function getNativeRole(
   }
 }
 
-export function useAriaProps(props: AccessibilityProps): RNAccessibilityProps {
+export function useAriaProps(
+  props: AccessibilityProps
+): RNAccessibilityProps & { focusable?: boolean } {
   return {
     accessibilityRole: getNativeRole(props.role),
 
     accessible: props.ariaHidden ? false : undefined,
+    focusable:
+      typeof props.tabIndex === "undefined" ? undefined : props.tabIndex === 0,
 
     accessibilityLabel: props.ariaLabel,
     accessibilityLabelledBy: props.ariaLabelledBy,
