@@ -5,5 +5,6 @@ export interface ButtonProps extends ElementProps {
   children?: ReactNode | ((state: PressableState) => ReactNode);
 
   disabled?: boolean;
+
   onPress?(evt: any): void;
 }

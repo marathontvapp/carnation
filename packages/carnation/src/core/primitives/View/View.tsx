@@ -4,7 +4,15 @@ import { useAriaProps } from "../../hooks";
 import clsx from "clsx";
 
 export const View = forwardRef<HTMLElement, ViewProps>(function View(
-  { children, className, id, scroll, tag: Component, ...props },
+  {
+    children,
+    className,
+    id,
+    onKeyDownCapture,
+    scroll,
+    tag: Component,
+    ...props
+  },
   ref
 ) {
   const ariaProps = useAriaProps(props);
@@ -14,7 +22,13 @@ export const View = forwardRef<HTMLElement, ViewProps>(function View(
     className
   );
   return (
-    <Component ref={ref as any} id={id} className={classes} {...ariaProps}>
+    <Component
+      ref={ref as any}
+      id={id}
+      className={classes}
+      onKeyDownCapture={onKeyDownCapture}
+      {...ariaProps}
+    >
       {children}
     </Component>
   );

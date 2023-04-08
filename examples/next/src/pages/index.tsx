@@ -1,7 +1,11 @@
 import { c } from "carnation-ds";
 import { m } from "carnation-ds/motion";
+import { Tabs } from "carnation-ds/a11y";
+import { useState } from "react";
 
 export default function Home() {
+  const [state, setState] = useState("hello");
+
   return (
     <c.div className="flex flex-col gap-10 min-h-screen items-center justify-center">
       <c.p>Hello world</c.p>
@@ -27,6 +31,23 @@ export default function Home() {
       <c.a href="/page2">
         <c.span>Go to page 2</c.span>
       </c.a>
+
+      <Tabs.Root
+        value={state}
+        onValueChange={(value) => setState(value as string)}
+      >
+        <Tabs.List>
+          <Tabs.Trigger value="hello">
+            <c.span>Hello</c.span>
+          </Tabs.Trigger>
+          <Tabs.Trigger value="world">
+            <c.span>World</c.span>
+          </Tabs.Trigger>
+        </Tabs.List>
+
+        <Tabs.Content value="hello">Hello!!!!!!</Tabs.Content>
+        <Tabs.Content value="world">World!!!!!!</Tabs.Content>
+      </Tabs.Root>
     </c.div>
   );
 }

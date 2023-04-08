@@ -4,16 +4,19 @@ import React, {
   useContext as _useContext,
   useEffect,
   useState,
+  isValidElement,
+  Children,
+  useCallback,
+  KeyboardEvent,
 } from "react";
 import { StoreApi, createStore, useStore } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { c } from "../core";
 import { slugify } from "../utils/slugify";
-import { TaggedViewProps } from "../core/primitives/View/types";
+import { LayoutElementProps, ButtonElementProps } from "../core";
 import { Slot } from "./Slot";
-import { ButtonProps } from "../core/primitives/Button/types";
 
-type Identifier = string;
+type Identifier = string | number;
 
 interface TabsState {
   value: Identifier;
@@ -58,13 +61,68 @@ export function Root({ children, onValueChange, value }: RootProps) {
 
 // List
 
-export interface ListProps extends Omit<TaggedViewProps, "role"> {
+export interface ListProps extends Omit<LayoutElementProps, "role"> {
   asChild?: boolean;
 }
 
 export function List({ asChild, children, ...props }: ListProps) {
+  const store = _useContext(TabsContext);
+  if (!store) {
+    throw new Error("Tabs.Trigger should be used within Tabs.Root.");
+  }
+
+  const onKeyDownCapture = useCallback(
+    (evt: KeyboardEvent) => {
+      const childElements = isValidElement(children)
+        ? children.props.children
+        : children;
+      const triggers = Children.toArray(childElements).filter(isValidElement);
+      const tabValues = triggers.flatMap((child) => {
+        if (
+          child.props &&
+          typeof child.props === "object" &&
+          "value" in child.props
+        ) {
+          return child.props.value;
+        } else {
+          return [];
+        }
+      });
+
+      const state = store.getState();
+      let nextValue: unknown;
+      if (evt.key === "Home") {
+        nextValue = tabValues.at(0);
+      } else if (evt.key === "End") {
+        nextValue = tabValues.at(-1);
+      } else if (evt.key === "ArrowRight") {
+        const selectedIndex = tabValues.findIndex((tab) => tab === state.value);
+        if (selectedIndex >= 0) {
+          nextValue = tabValues.at((selectedIndex + 1) % tabValues.length);
+        }
+      } else if (evt.key === "ArrowLeft") {
+        const selectedIndex = tabValues.findIndex((tab) => tab === state.value);
+        if (selectedIndex >= 0) {
+          nextValue = tabValues.at(
+            (tabValues.length + selectedIndex - 1) % tabValues.length
+          );
+        }
+      }
+
+      if (typeof nextValue === "string" || typeof nextValue === "number") {
+        state.onValueChange(nextValue);
+        // TODO: focus the new tab element
+      }
+    },
+    [children, store]
+  );
+
   return (
-    <Slot<TaggedViewProps> role="tablist" {...props}>
+    <Slot<LayoutElementProps>
+      role="tablist"
+      onKeyDownCapture={onKeyDownCapture}
+      {...props}
+    >
       {asChild ? children : <c.div>{children}</c.div>}
     </Slot>
   );
@@ -75,7 +133,7 @@ export function List({ asChild, children, ...props }: ListProps) {
 export interface TriggerProps
   extends PropsWithChildren<
     Omit<
-      ButtonProps,
+      ButtonElementProps,
       "children" | "id" | "role" | "onPress" | "ariaControls" | "ariaSelected"
     >
   > {
@@ -91,16 +149,17 @@ export function Trigger({ asChild, children, value, ...props }: TriggerProps) {
 
   const state = useStore(store);
 
-  const id = slugify(value);
+  const id = slugify(value.toString());
   const selected = value === state.value;
 
   return (
-    <Slot<ButtonProps>
+    <Slot<ButtonElementProps>
       id={id}
       onPress={() => {
         state.onValueChange(value);
       }}
       role="tab"
+      tabIndex={selected ? 0 : -1}
       ariaControls={`tabpanel-${id}`}
       ariaSelected={selected}
       {...props}
@@ -114,14 +173,14 @@ export function Trigger({ asChild, children, value, ...props }: TriggerProps) {
 
 export interface ContentProps
   extends Omit<
-    TaggedViewProps,
+    LayoutElementProps,
     "id" | "role" | "ariaHidden" | "ariaLabelledBy"
   > {
   asChild?: boolean;
   value: Identifier;
 }
 
-export function Content({ asChild, children, value }: ContentProps) {
+export function Content({ asChild, children, value, ...props }: ContentProps) {
   const store = _useContext(TabsContext);
   if (!store) {
     throw new Error("Tabs.Content should be used within Tabs.Root.");
@@ -129,17 +188,19 @@ export function Content({ asChild, children, value }: ContentProps) {
 
   const selected = useStore(store, (state) => state.value === value);
 
-  const id = slugify(value);
+  const id = slugify(value.toString());
+
+  if (!selected) {
+    return null;
+  }
 
   return (
-    <Slot<TaggedViewProps>
+    <Slot<LayoutElementProps>
       id={`tabpanel-${id}`}
-      // className={clsx(
-      //   !selected && "web:hidden native:absolute native:left-[-200vw]"
-      // )}
       role="tabpanel"
       ariaHidden={!selected}
       ariaLabelledBy={id}
+      {...props}
     >
       {asChild ? children : <c.div>{children}</c.div>}
     </Slot>
