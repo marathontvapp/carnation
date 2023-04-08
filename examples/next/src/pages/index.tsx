@@ -42,8 +42,12 @@ export default function Home() {
           </Tabs.Trigger>
         </Tabs.List>
 
-        <Tabs.Content value="hello">Hello!!!!!!</Tabs.Content>
-        <Tabs.Content value="world">World!!!!!!</Tabs.Content>
+        <Tabs.Content value="hello">
+          <c.span>Hello!!!!!!</c.span>
+        </Tabs.Content>
+        <Tabs.Content value="world">
+          <c.span>World!!!!!!</c.span>
+        </Tabs.Content>
       </Tabs.Root>
     </c.div>
   );

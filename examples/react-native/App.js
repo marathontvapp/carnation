@@ -1,10 +1,20 @@
 import { StatusBar } from "expo-status-bar";
 import { c } from "carnation-ds";
 import { m } from "carnation-ds/motion";
-import { useState } from "react";
+import { Tabs } from "carnation-ds/a11y";
+import { useEffect, useRef, useState } from "react";
+import { View, findNodeHandle } from "react-native";
 
 export default function App() {
   const [counter, setCounter] = useState(0);
+
+  const [state, setState] = useState("hello");
+  const ref = useRef(null);
+
+  useEffect(() => {
+    console.log(findNodeHandle(ref.current));
+  }, []);
+
   return (
     <c.div className="flex-1 bg-white items-center justify-center gap-10">
       <StatusBar style="auto" />
@@ -35,6 +45,24 @@ export default function App() {
           </c.span>
         )}
       </c.button>
+
+      <Tabs.Root value={state} onValueChange={setState}>
+        <Tabs.List>
+          <Tabs.Trigger ref={ref} value="hello">
+            <c.span>Hello</c.span>
+          </Tabs.Trigger>
+          <Tabs.Trigger value="world">
+            <c.span>World</c.span>
+          </Tabs.Trigger>
+        </Tabs.List>
+
+        <Tabs.Content value="hello">
+          <c.span>Hello!!!!!!</c.span>
+        </Tabs.Content>
+        <Tabs.Content value="world">
+          <c.span>World!!!!!!</c.span>
+        </Tabs.Content>
+      </Tabs.Root>
     </c.div>
   );
 }
