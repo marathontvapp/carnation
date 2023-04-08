@@ -1,19 +1,25 @@
 import React, {
   Children,
+  ForwardedRef,
   Fragment,
   PropsWithChildren,
   ReactElement,
   cloneElement,
+  forwardRef,
   isValidElement,
 } from "react";
 
-export function Slot<P extends object>({
-  children,
-  ...props
-}: PropsWithChildren<P>) {
+function SlotInner<P, R>(
+  { children, ...props }: PropsWithChildren<P>,
+  ref: ForwardedRef<R>
+) {
   const child = Children.only(children);
   if (!child || !isValidElement(child)) {
     return null;
   }
-  return <Fragment>{cloneElement(child, props)}</Fragment>;
+  return <Fragment>{cloneElement(child, { ...props, ref })}</Fragment>;
 }
+
+export const Slot = forwardRef(SlotInner) as <P, R = any>(
+  props: PropsWithChildren<P> & { ref?: ForwardedRef<R> }
+) => ReturnType<typeof SlotInner>;

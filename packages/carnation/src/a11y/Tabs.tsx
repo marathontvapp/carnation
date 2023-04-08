@@ -8,6 +8,8 @@ import React, {
   Children,
   useCallback,
   KeyboardEvent,
+  forwardRef,
+  useMemo,
 } from "react";
 import { StoreApi, createStore, useStore } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
@@ -29,12 +31,16 @@ const TabsContext = createContext<TabsContextValue | null>(null);
 
 // Root
 
-export interface RootProps extends PropsWithChildren<{}> {
-  onValueChange?(value: Identifier): void;
-  value: Identifier;
+export interface RootProps<T extends Identifier> extends PropsWithChildren<{}> {
+  onValueChange?(value: T): void;
+  value: T;
 }
 
-export function Root({ children, onValueChange, value }: RootProps) {
+export function Root<T extends Identifier>({
+  children,
+  onValueChange,
+  value,
+}: RootProps<T>) {
   const [store] = useState(() =>
     createStore(
       subscribeWithSelector<TabsState>((set, get) => ({
@@ -52,7 +58,7 @@ export function Root({ children, onValueChange, value }: RootProps) {
 
   useEffect(() => {
     if (onValueChange) {
-      store.subscribe((state) => state.value, onValueChange);
+      store.subscribe((state) => state.value as any, onValueChange);
     }
   }, [store, onValueChange]);
 
@@ -73,48 +79,67 @@ export function List({ asChild, children, ...props }: ListProps) {
 
   const onKeyDownCapture = useCallback(
     (evt: KeyboardEvent) => {
-      const childElements = isValidElement(children)
-        ? children.props.children
-        : children;
+      const childElements =
+        asChild && isValidElement(children)
+          ? children.props.children
+          : children;
       const triggers = Children.toArray(childElements).filter(isValidElement);
-      const tabValues = triggers.flatMap((child) => {
+      const triggerValues = triggers.flatMap((child) => {
         if (
           child.props &&
           typeof child.props === "object" &&
           "value" in child.props
         ) {
-          return child.props.value;
+          return child.props.value as Identifier;
         } else {
           return [];
         }
       });
 
+      // Get all values of enabled triggers
+      const focusableValues = triggerValues.flatMap((value) => {
+        const id = slugify(value.toString());
+        const element = document.getElementById(id);
+        if (
+          !(element instanceof HTMLButtonElement) ||
+          element.ariaDisabled === "true" ||
+          element.disabled
+        ) {
+          return [];
+        } else {
+          return value;
+        }
+      });
+
       const state = store.getState();
+      const selectedIndex = focusableValues.findIndex(
+        (value) => value === state.value
+      );
       let nextValue: unknown;
       if (evt.key === "Home") {
-        nextValue = tabValues.at(0);
+        nextValue = focusableValues.at(0);
       } else if (evt.key === "End") {
-        nextValue = tabValues.at(-1);
-      } else if (evt.key === "ArrowRight") {
-        const selectedIndex = tabValues.findIndex((tab) => tab === state.value);
-        if (selectedIndex >= 0) {
-          nextValue = tabValues.at((selectedIndex + 1) % tabValues.length);
-        }
-      } else if (evt.key === "ArrowLeft") {
-        const selectedIndex = tabValues.findIndex((tab) => tab === state.value);
-        if (selectedIndex >= 0) {
-          nextValue = tabValues.at(
-            (tabValues.length + selectedIndex - 1) % tabValues.length
-          );
-        }
+        nextValue = focusableValues.at(-1);
+      } else if (evt.key === "ArrowRight" && selectedIndex >= 0) {
+        nextValue = focusableValues.at(
+          (selectedIndex + 1) % focusableValues.length
+        );
+      } else if (evt.key === "ArrowLeft" && selectedIndex >= 0) {
+        nextValue = focusableValues.at(
+          (focusableValues.length + selectedIndex - 1) % focusableValues.length
+        );
       }
 
       if (typeof nextValue === "string" || typeof nextValue === "number") {
+        // Update the store
         state.onValueChange(nextValue);
-        // TODO: focus the new tab element
+        // Focus the trigger
+        const id = slugify(nextValue.toString());
+        const trigger = document.getElementById(id);
+        trigger?.focus();
       }
     },
-    [children, store]
+    [asChild, children, store]
   );
 
   return (
@@ -141,7 +166,10 @@ export interface TriggerProps
   value: Identifier;
 }
 
-export function Trigger({ asChild, children, value, ...props }: TriggerProps) {
+export const Trigger = forwardRef<any, TriggerProps>(function Trigger(
+  { asChild, children, value, ...props },
+  ref
+) {
   const store = _useContext(TabsContext);
   if (!store) {
     throw new Error("Tabs.Trigger should be used within Tabs.Root.");
@@ -154,6 +182,7 @@ export function Trigger({ asChild, children, value, ...props }: TriggerProps) {
 
   return (
     <Slot<ButtonElementProps>
+      ref={ref}
       id={id}
       onPress={() => {
         state.onValueChange(value);
@@ -167,7 +196,7 @@ export function Trigger({ asChild, children, value, ...props }: TriggerProps) {
       {asChild ? children : <c.button>{children}</c.button>}
     </Slot>
   );
-}
+});
 
 // Content
 

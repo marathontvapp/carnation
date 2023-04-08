@@ -32,10 +32,7 @@ export default function Home() {
         <c.span>Go to page 2</c.span>
       </c.a>
 
-      <Tabs.Root
-        value={state}
-        onValueChange={(value) => setState(value as string)}
-      >
+      <Tabs.Root<string> value={state} onValueChange={setState}>
         <Tabs.List>
           <Tabs.Trigger value="hello">
             <c.span>Hello</c.span>
