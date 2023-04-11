@@ -34,10 +34,10 @@ export default function Home() {
 
       <Tabs.Root<string> value={state} onValueChange={setState}>
         <Tabs.List>
-          <Tabs.Trigger value="hello">
+          <Tabs.Trigger className="aria-selected:bg-red-400" value="hello">
             <c.span>Hello</c.span>
           </Tabs.Trigger>
-          <Tabs.Trigger value="world">
+          <Tabs.Trigger className="aria-selected:bg-red-400" value="world">
             <c.span>World</c.span>
           </Tabs.Trigger>
         </Tabs.List>

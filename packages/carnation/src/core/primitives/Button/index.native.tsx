@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
 import { ButtonProps } from "./types";
 import { Pressable, View } from "react-native";
-import { styled } from "nativewind";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
+import { styled } from "../styled.native";
 
 export const Button = styled(
   forwardRef<View, ButtonProps & { style?: any }>(function Button(

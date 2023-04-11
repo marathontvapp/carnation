@@ -48,10 +48,14 @@ export default function App() {
 
       <Tabs.Root value={state} onValueChange={setState}>
         <Tabs.List>
-          <Tabs.Trigger ref={ref} value="hello">
+          <Tabs.Trigger
+            ref={ref}
+            className="aria-selected:bg-red-400"
+            value="hello"
+          >
             <c.span>Hello</c.span>
           </Tabs.Trigger>
-          <Tabs.Trigger value="world">
+          <Tabs.Trigger className="aria-selected:bg-red-400" value="world">
             <c.span>World</c.span>
           </Tabs.Trigger>
         </Tabs.List>

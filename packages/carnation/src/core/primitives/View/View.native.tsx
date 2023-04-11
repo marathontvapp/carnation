@@ -1,7 +1,7 @@
 import { ViewProps } from "./types";
 import { View as RNView, ScrollView as RNScrollView } from "react-native";
 import React, { ForwardedRef, forwardRef } from "react";
-import { styled } from "nativewind";
+import { styled } from "../styled.native";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
 
 export const View = styled(
