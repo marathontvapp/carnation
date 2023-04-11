@@ -13,7 +13,7 @@ function SlotInner<P, R>(
   ref: ForwardedRef<R>
 ) {
   const child = Children.only(children);
-  if (!child || !isValidElement(child)) {
+  if (!isValidElement(child)) {
     return null;
   }
   return <Fragment>{cloneElement(child, { ...props, ref })}</Fragment>;

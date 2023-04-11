@@ -10,6 +10,7 @@
   "files": [
     "lib/",
     "src/",
+    "tailwind/",
     "motion.js",
     "motion.d.ts",
     "README.md"

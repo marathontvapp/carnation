@@ -2,18 +2,12 @@ import { StatusBar } from "expo-status-bar";
 import { c } from "carnation-ds";
 import { m } from "carnation-ds/motion";
 import { Tabs } from "carnation-ds/a11y";
-import { useEffect, useRef, useState } from "react";
-import { View, findNodeHandle } from "react-native";
+import { useState } from "react";
 
 export default function App() {
   const [counter, setCounter] = useState(0);
 
   const [state, setState] = useState("hello");
-  const ref = useRef(null);
-
-  useEffect(() => {
-    console.log(findNodeHandle(ref.current));
-  }, []);
 
   return (
     <c.div className="flex-1 bg-white items-center justify-center gap-10">
@@ -48,11 +42,7 @@ export default function App() {
 
       <Tabs.Root value={state} onValueChange={setState}>
         <Tabs.List>
-          <Tabs.Trigger
-            ref={ref}
-            className="aria-selected:bg-red-400"
-            value="hello"
-          >
+          <Tabs.Trigger className="aria-selected:bg-red-400" value="hello">
             <c.span>Hello</c.span>
           </Tabs.Trigger>
           <Tabs.Trigger className="aria-selected:bg-red-400" value="world">

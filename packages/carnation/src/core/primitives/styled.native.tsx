@@ -11,17 +11,17 @@ export function useAriaStateVariants(
 
     const stateValueMap = new Map<string, string[]>();
     className.split(" ").forEach((c) => {
-      const [state, value] = c.split(":");
-      if (state && state.match(/aria-.*$/) && value) {
-        const classes = stateValueMap.get(state) || [];
-        stateValueMap.set(state, [...classes, value]);
+      const [state] = c.split(":");
+      if (state && state.match(/aria-.*$/)) {
+        const classes = stateValueMap.get(state) ?? [];
+        stateValueMap.set(state, [...classes, c]);
       } else {
         appliedClasses.push(c);
       }
     });
 
     if (props.ariaSelected) {
-      const classes = stateValueMap.get("aria-selected") || [];
+      const classes = stateValueMap.get("aria-selected") ?? [];
       appliedClasses.push(...classes);
     }
 
@@ -38,12 +38,11 @@ export function styled<P extends AccessibilityProps, R>(
     ref
   ) {
     const appliedClassName = useAriaStateVariants(className ?? "", props);
-
     return (
       <StyledComponent
+        {...(props as any)}
         ref={ref}
         className={appliedClassName}
-        {...(props as any)}
       />
     );
   });

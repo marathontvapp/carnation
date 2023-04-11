@@ -77,6 +77,7 @@ export function List({ asChild, children, ...props }: ListProps) {
     throw new Error("Tabs.Trigger should be used within Tabs.Root.");
   }
 
+  // WEB ONLY: respond to keyboard events
   const onKeyDownCapture = useCallback(
     (evt: KeyboardEvent) => {
       const childElements =
