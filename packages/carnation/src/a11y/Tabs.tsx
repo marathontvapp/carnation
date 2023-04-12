@@ -9,14 +9,17 @@ import React, {
   useCallback,
   KeyboardEvent,
   forwardRef,
-  useMemo,
+  ForwardedRef,
 } from "react";
 import { StoreApi, createStore, useStore } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
-import { c } from "../core";
+import { c, LayoutElementProps, ButtonElementProps } from "../core";
 import { slugify } from "../utils/slugify";
-import { LayoutElementProps, ButtonElementProps } from "../core";
-import { Slot } from "./Slot";
+import { Slot as BaseSlot } from "@radix-ui/react-slot";
+
+const Slot = BaseSlot as <P, R = any>(
+  props: P & { ref?: ForwardedRef<R> }
+) => JSX.Element;
 
 type Identifier = string | number;
 
@@ -143,14 +146,11 @@ export function List({ asChild, children, ...props }: ListProps) {
     [asChild, children, store]
   );
 
+  const Component = asChild ? Slot : c.div;
   return (
-    <Slot<LayoutElementProps>
-      role="tablist"
-      onKeyDownCapture={onKeyDownCapture}
-      {...props}
-    >
-      {asChild ? children : <c.div>{children}</c.div>}
-    </Slot>
+    <Component role="tablist" onKeyDownCapture={onKeyDownCapture} {...props}>
+      {children}
+    </Component>
   );
 }
 
@@ -181,8 +181,9 @@ export const Trigger = forwardRef<any, TriggerProps>(function Trigger(
   const id = slugify(value.toString());
   const selected = value === state.value;
 
+  const Component = asChild ? Slot : c.button;
   return (
-    <Slot<ButtonElementProps>
+    <Component
       ref={ref}
       id={id}
       onPress={() => {
@@ -194,8 +195,8 @@ export const Trigger = forwardRef<any, TriggerProps>(function Trigger(
       ariaSelected={selected}
       {...props}
     >
-      {asChild ? children : <c.button>{children}</c.button>}
-    </Slot>
+      {children}
+    </Component>
   );
 });
 
@@ -224,16 +225,17 @@ export function Content({ asChild, children, value, ...props }: ContentProps) {
     return null;
   }
 
+  const Component = asChild ? Slot : c.div;
   return (
-    <Slot<LayoutElementProps>
+    <Component
       id={`tabpanel-${id}`}
       role="tabpanel"
       ariaHidden={!selected}
       ariaLabelledBy={id}
       {...props}
     >
-      {asChild ? children : <c.div>{children}</c.div>}
-    </Slot>
+      {children}
+    </Component>
   );
 }
 

@@ -13,7 +13,7 @@ import {
   Rect as RNRect,
   Line as RNLine,
 } from "react-native-svg";
-import { styled } from "../styled.native";
+import { styled } from "../../styled.native";
 import React, { createContext, useContext } from "react";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
 

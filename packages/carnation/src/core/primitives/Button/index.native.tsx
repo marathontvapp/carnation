@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
-import { ButtonProps } from "./types";
 import { Pressable, View } from "react-native";
+import { styled } from "../../styled.native";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
-import { styled } from "../styled.native";
+import type { ButtonProps } from "./types";
 
 export const Button = styled(
   forwardRef<View, ButtonProps & { style?: any }>(function Button(
@@ -20,8 +20,8 @@ export const Button = styled(
         style={style}
         disabled={disabled}
         onPress={onPress}
-        {...ariaProps}
         accessibilityRole="button"
+        {...ariaProps}
       >
         {children}
       </Pressable>

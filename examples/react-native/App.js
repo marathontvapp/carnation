@@ -1,7 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { c } from "carnation-ds";
-import { m } from "carnation-ds/motion";
-import { Tabs } from "carnation-ds/a11y";
+import { c, m, Tabs } from "carnation-ds";
 import { useState } from "react";
 
 export default function App() {
@@ -42,11 +40,20 @@ export default function App() {
 
       <Tabs.Root value={state} onValueChange={setState}>
         <Tabs.List>
-          <Tabs.Trigger className="aria-selected:bg-red-400" value="hello">
-            <c.span>Hello</c.span>
+          <Tabs.Trigger
+            className="group aria-selected:bg-red-400"
+            value="hello"
+          >
+            <c.span className="group-aria-selected:text-white">Hello</c.span>
           </Tabs.Trigger>
-          <Tabs.Trigger className="aria-selected:bg-red-400" value="world">
-            <c.span>World</c.span>
+          <Tabs.Trigger
+            asChild
+            className="group aria-selected:bg-red-400"
+            value="world"
+          >
+            <c.button>
+              <c.span className="group-aria-selected:text-white">World</c.span>
+            </c.button>
           </Tabs.Trigger>
         </Tabs.List>
 
