@@ -2,8 +2,6 @@ import React, {
   PropsWithChildren,
   createContext,
   useContext as _useContext,
-  useEffect,
-  useState,
   isValidElement,
   Children,
   useCallback,
@@ -11,8 +9,6 @@ import React, {
   forwardRef,
   ForwardedRef,
 } from "react";
-import { StoreApi, createStore, useStore } from "zustand";
-import { subscribeWithSelector } from "zustand/middleware";
 import { c, LayoutElementProps, ButtonElementProps } from "../core";
 import { slugify } from "../utils/slugify";
 import { Slot as BaseSlot } from "@radix-ui/react-slot";
@@ -28,14 +24,12 @@ interface TabsState {
   onValueChange(value: Identifier): void;
 }
 
-type TabsContextValue = StoreApi<TabsState>;
-
-const TabsContext = createContext<TabsContextValue | null>(null);
+const TabsContext = createContext<TabsState | null>(null);
 
 // Root
 
 export interface RootProps<T extends Identifier> extends PropsWithChildren<{}> {
-  onValueChange?(value: T): void;
+  onValueChange(value: T): void;
   value: T;
 }
 
@@ -44,28 +38,11 @@ export function Root<T extends Identifier>({
   onValueChange,
   value,
 }: RootProps<T>) {
-  const [store] = useState(() =>
-    createStore(
-      subscribeWithSelector<TabsState>((set, get) => ({
-        onValueChange(value) {
-          set({ value });
-        },
-        value,
-      }))
-    )
+  return (
+    <TabsContext.Provider value={{ value, onValueChange }}>
+      {children}
+    </TabsContext.Provider>
   );
-
-  useEffect(() => {
-    store.setState({ value });
-  }, [store, value]);
-
-  useEffect(() => {
-    if (onValueChange) {
-      store.subscribe((state) => state.value as any, onValueChange);
-    }
-  }, [store, onValueChange]);
-
-  return <TabsContext.Provider value={store}>{children}</TabsContext.Provider>;
 }
 
 // List
@@ -115,9 +92,8 @@ export function List({ asChild, children, ...props }: ListProps) {
         }
       });
 
-      const state = store.getState();
       const selectedIndex = focusableValues.findIndex(
-        (value) => value === state.value
+        (value) => value === store.value
       );
       let nextValue: unknown;
       if (evt.key === "Home") {
@@ -136,7 +112,7 @@ export function List({ asChild, children, ...props }: ListProps) {
 
       if (typeof nextValue === "string" || typeof nextValue === "number") {
         // Update the store
-        state.onValueChange(nextValue);
+        store.onValueChange(nextValue);
         // Focus the trigger
         const id = slugify(nextValue.toString());
         const trigger = document.getElementById(id);
@@ -176,10 +152,8 @@ export const Trigger = forwardRef<any, TriggerProps>(function Trigger(
     throw new Error("Tabs.Trigger should be used within Tabs.Root.");
   }
 
-  const state = useStore(store);
-
   const id = slugify(value.toString());
-  const selected = value === state.value;
+  const selected = value === store.value;
 
   const Component = asChild ? Slot : c.button;
   return (
@@ -187,7 +161,7 @@ export const Trigger = forwardRef<any, TriggerProps>(function Trigger(
       ref={ref}
       id={id}
       onPress={() => {
-        state.onValueChange(value);
+        store.onValueChange(value);
       }}
       role="tab"
       tabIndex={selected ? 0 : -1}
@@ -217,7 +191,7 @@ export function Content({ asChild, children, value, ...props }: ContentProps) {
     throw new Error("Tabs.Content should be used within Tabs.Root.");
   }
 
-  const selected = useStore(store, (state) => state.value === value);
+  const selected = store.value === value;
 
   const id = slugify(value.toString());
 
@@ -245,9 +219,6 @@ export function useContext(): [Identifier, (value: Identifier) => void] {
     throw new Error("Tabs.useContext() should be used within Tabs.Root.");
   }
 
-  const [value, onValueChange] = useStore(store, (state) => [
-    state.value,
-    state.onValueChange,
-  ]);
+  const { value, onValueChange } = store;
   return [value, onValueChange];
 }
