@@ -97,6 +97,7 @@ export type MotionValue<V> = Omit<
 
 export interface AnimationPlaybackControls {
   cancel: () => void;
+  then: (onResolve: VoidFunction, onReject?: VoidFunction) => Promise<void>;
 }
 
 export type AnimatableValue = number | string | Array<number>;
@@ -114,6 +115,7 @@ export type MotionStyle = Partial<
 export interface MotionProps {
   initial?: TargetAndTransition | string;
   animate?: TargetAndTransition | string;
+  exit?: TargetAndTransition | string;
   variants?: Variants;
   transition?: TransitionDefinition;
   transformTemplate?: TransformTemplateFn;

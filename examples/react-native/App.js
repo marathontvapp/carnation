@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { c, m, Tabs } from "carnation-ds";
+import { AnimatePresence, c, m, Tabs } from "carnation-ds";
 import { useState } from "react";
 
 export default function App() {
@@ -57,12 +57,26 @@ export default function App() {
           </Tabs.Trigger>
         </Tabs.List>
 
-        <Tabs.Content value="hello">
-          <c.span>Hello!!!!!!</c.span>
-        </Tabs.Content>
-        <Tabs.Content value="world">
-          <c.span>World!!!!!!</c.span>
-        </Tabs.Content>
+        <AnimatePresence>
+          <Tabs.Content key="hello" asChild value="hello">
+            <m.div
+              initial={{ opacity: 0, translateY: 30 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              exit={{ opacity: 0, translateY: 30 }}
+            >
+              <c.span>Hello!!!!!!</c.span>
+            </m.div>
+          </Tabs.Content>
+          <Tabs.Content key="world" asChild value="world">
+            <m.div
+              initial={{ opacity: 0, translateY: 30 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              exit={{ opacity: 0, translateY: 30 }}
+            >
+              <c.span>World!!!!!!</c.span>
+            </m.div>
+          </Tabs.Content>
+        </AnimatePresence>
       </Tabs.Root>
     </c.div>
   );

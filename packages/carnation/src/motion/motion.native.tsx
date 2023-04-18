@@ -4,6 +4,7 @@ import React, {
   FunctionComponent,
   useEffect,
   useMemo,
+  useRef,
 } from "react";
 import {
   MotionProps,
@@ -25,6 +26,7 @@ import Animated, {
   cancelAnimation,
   Easing,
   EasingFunctionFactory,
+  runOnJS,
   runOnUI,
   useAnimatedStyle,
   useSharedValue,
@@ -33,6 +35,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { EasingFunction, ViewStyle } from "react-native";
+import { useIsPresent, usePresence } from "framer-motion";
 
 const MOTION_STYLE_PROPERTIES: (keyof MotionProperties)[] = [
   "perspective",
@@ -189,26 +192,40 @@ export function animate<V extends AnimatableValue>(
   let animation: V | undefined;
   let transition = options ?? DEFAULT_TRANSITION;
 
-  if (transition.type === "spring") {
-    animation = withSpring(to, transition);
-  } else if (transition.type === "timing") {
-    animation = withTiming(to, {
-      duration: transition.duration ? transition.duration * 1000 : undefined,
-      easing: getEasing(transition.ease),
-    });
-  }
-
-  if (typeof animation !== "undefined") {
-    if (transition.repeat) {
-      animation = withRepeat(
-        animation,
-        transition.repeat,
-        transition.repeatType === "reverse"
+  const promise = new Promise<void>((resolve) => {
+    if (transition.type === "spring") {
+      animation = withSpring(to, transition, () => {
+        "worklet";
+        runOnJS(resolve)();
+      });
+    } else if (transition.type === "timing") {
+      animation = withTiming(
+        to,
+        {
+          duration: transition.duration
+            ? transition.duration * 1000
+            : undefined,
+          easing: getEasing(transition.ease),
+        },
+        () => {
+          "worklet";
+          runOnJS(resolve)();
+        }
       );
     }
 
-    value.set(animation);
-  }
+    if (typeof animation !== "undefined") {
+      if (transition.repeat) {
+        animation = withRepeat(
+          animation,
+          transition.repeat,
+          transition.repeatType === "reverse"
+        );
+      }
+
+      value.set(animation);
+    }
+  });
 
   return {
     cancel() {
@@ -216,14 +233,19 @@ export function animate<V extends AnimatableValue>(
       value.stop();
       value.set(value.getPrevious());
     },
+    then(onResolve: VoidFunction, onReject?: VoidFunction) {
+      return promise.then(onResolve).catch(onReject);
+    },
   };
 }
 
 function useTrackedMotionValue<P extends keyof MotionProperties>(
   property: P,
   props: MotionProps,
-  defaultValue: Required<MotionProperties>[P]
+  defaultValue: Required<MotionProperties>[P],
+  callToRemove: (property: keyof MotionProperties) => void
 ): MotionValue<Required<MotionProperties>[P]> {
+  const isPresent = useIsPresent();
   const value = useMotionValue(
     getTargetValue(property, props.initial, props.variants, defaultValue)
   );
@@ -245,6 +267,27 @@ function useTrackedMotionValue<P extends keyof MotionProperties>(
     value.stop();
     animate(value, toValue, transition);
   }, [toValue]);
+
+  useEffect(() => {
+    if (!isPresent) {
+      const toValue = getTargetValue(
+        property,
+        props.exit,
+        props.variants,
+        defaultValue
+      );
+      const transition = getTransition(
+        property,
+        props.exit,
+        props.variants,
+        props.transition
+      );
+      value.stop();
+      animate(value, toValue, transition).then(() => {
+        callToRemove(property);
+      });
+    }
+  }, [isPresent]);
 
   return value;
 }
@@ -280,6 +323,7 @@ export function motion<Props extends object, Ref>(
     function MotionComponent(
       {
         animate,
+        exit,
         initial,
         style,
         transformTemplate = DEFAULT_TRANSFORM_TEMPLATE,
@@ -289,6 +333,24 @@ export function motion<Props extends object, Ref>(
       },
       ref
     ) {
+      const [isPresent, safeToRemove] = usePresence();
+      const exitedPropertiesRef = useRef(MOTION_STYLE_PROPERTIES);
+      useEffect(() => {
+        if (isPresent) {
+          exitedPropertiesRef.current = MOTION_STYLE_PROPERTIES;
+        }
+      }, [isPresent]);
+
+      function callToRemove(property: keyof MotionProperties) {
+        console.log("remove", property);
+        exitedPropertiesRef.current = exitedPropertiesRef.current.filter(
+          (p) => p !== property
+        );
+        if (exitedPropertiesRef.current.length === 0) {
+          safeToRemove?.();
+        }
+      }
+
       // Account for style prop passed by `className` transformation
       const [viewStyle, motionStyle] = useMemo(() => {
         const styleProp: ViewStyle | MotionStyle | [ViewStyle, MotionStyle] =
@@ -314,6 +376,7 @@ export function motion<Props extends object, Ref>(
 
       const motionProps = {
         animate,
+        exit,
         initial,
         style: motionStyle,
         transition,
@@ -324,21 +387,82 @@ export function motion<Props extends object, Ref>(
       const perspective = useTrackedMotionValue(
         "perspective",
         motionProps,
-        1000
+        1000,
+        callToRemove
       );
-      const rotate = useTrackedMotionValue("rotate", motionProps, 0);
-      const rotateX = useTrackedMotionValue("rotateX", motionProps, 0);
-      const rotateY = useTrackedMotionValue("rotateY", motionProps, 0);
-      const rotateZ = useTrackedMotionValue("rotateZ", motionProps, 0);
-      const scale = useTrackedMotionValue("scale", motionProps, 1);
-      const scaleX = useTrackedMotionValue("scaleX", motionProps, 1);
-      const scaleY = useTrackedMotionValue("scaleY", motionProps, 1);
-      const skewX = useTrackedMotionValue("skewX", motionProps, 0);
-      const skewY = useTrackedMotionValue("skewY", motionProps, 0);
-      const translateX = useTrackedMotionValue("translateX", motionProps, 0);
-      const translateY = useTrackedMotionValue("translateY", motionProps, 0);
+      const rotate = useTrackedMotionValue(
+        "rotate",
+        motionProps,
+        0,
+        callToRemove
+      );
+      const rotateX = useTrackedMotionValue(
+        "rotateX",
+        motionProps,
+        0,
+        callToRemove
+      );
+      const rotateY = useTrackedMotionValue(
+        "rotateY",
+        motionProps,
+        0,
+        callToRemove
+      );
+      const rotateZ = useTrackedMotionValue(
+        "rotateZ",
+        motionProps,
+        0,
+        callToRemove
+      );
+      const scale = useTrackedMotionValue(
+        "scale",
+        motionProps,
+        1,
+        callToRemove
+      );
+      const scaleX = useTrackedMotionValue(
+        "scaleX",
+        motionProps,
+        1,
+        callToRemove
+      );
+      const scaleY = useTrackedMotionValue(
+        "scaleY",
+        motionProps,
+        1,
+        callToRemove
+      );
+      const skewX = useTrackedMotionValue(
+        "skewX",
+        motionProps,
+        0,
+        callToRemove
+      );
+      const skewY = useTrackedMotionValue(
+        "skewY",
+        motionProps,
+        0,
+        callToRemove
+      );
+      const translateX = useTrackedMotionValue(
+        "translateX",
+        motionProps,
+        0,
+        callToRemove
+      );
+      const translateY = useTrackedMotionValue(
+        "translateY",
+        motionProps,
+        0,
+        callToRemove
+      );
       // Style properties
-      const opacity = useTrackedMotionValue("opacity", motionProps, 1);
+      const opacity = useTrackedMotionValue(
+        "opacity",
+        motionProps,
+        1,
+        callToRemove
+      );
 
       const animatedStyle = useAnimatedStyle(() => {
         return {

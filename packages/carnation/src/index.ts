@@ -1,5 +1,5 @@
 export { c, CarnationProvider, useAccessibility } from "./core";
-export { m, motion, animate, useMotionValue } from "./motion";
+export { m, motion, animate, useMotionValue, AnimatePresence } from "./motion";
 export { Tabs } from "./a11y";
 
 export type {

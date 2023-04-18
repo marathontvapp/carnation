@@ -12,6 +12,7 @@ import React, {
 import { c, LayoutElementProps, ButtonElementProps } from "../core";
 import { slugify } from "../utils/slugify";
 import { Slot as BaseSlot } from "@radix-ui/react-slot";
+import { useIsPresent } from "framer-motion";
 
 const Slot = BaseSlot as <P, R = any>(
   props: P & { ref?: ForwardedRef<R> }
@@ -195,7 +196,9 @@ export function Content({ asChild, children, value, ...props }: ContentProps) {
 
   const id = slugify(value.toString());
 
-  if (!selected) {
+  const isPresent = useIsPresent();
+
+  if (!selected && isPresent) {
     return null;
   }
 
