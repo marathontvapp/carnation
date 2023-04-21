@@ -1,6 +1,6 @@
 {
   "name": "example-expo",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "private": true,
   "scripts": {
     "start": "expo start --dev-client",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-    "carnation-ds": "1.0.0-alpha.8",
+    "carnation-ds": "1.0.0-alpha.9",
     "expo": "~48.0.10",
     "expo-status-bar": "~1.4.4",
     "nativewind": "^2.0.11",
