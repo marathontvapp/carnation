@@ -1,11 +1,5 @@
-export interface AccessibilityProps {
-  role?: "tablist" | "tab" | "tabpanel";
-  tabIndex?: 0 | -1;
-
+export interface AccessibilityState {
   ariaHidden?: boolean;
-
-  ariaLabel?: string;
-  ariaLabelledBy?: string;
 
   ariaModal?: boolean;
   ariaControls?: string;
@@ -16,6 +10,14 @@ export interface AccessibilityProps {
   ariaExpanded?: boolean;
   ariaSelected?: boolean;
   ariaCurrent?: "page";
+}
+
+export interface AccessibilityProps extends AccessibilityState {
+  role?: "tablist" | "tab" | "tabpanel";
+  tabIndex?: 0 | -1;
+
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
 }
 
 export interface ElementProps extends AccessibilityProps {

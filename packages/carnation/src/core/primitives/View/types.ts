@@ -1,8 +1,7 @@
-import type { PropsWithChildren } from "react";
+import type { KeyboardEvent, PropsWithChildren } from "react";
 import type { ElementProps } from "../types";
 
 export interface ViewProps extends PropsWithChildren, ElementProps {
-  scroll?: "horizontal" | "vertical";
   tag:
     | "span"
     | "div"
@@ -18,6 +17,10 @@ export interface ViewProps extends PropsWithChildren, ElementProps {
     | "dl"
     | "dt"
     | "dd";
+
+  scroll?: "horizontal" | "vertical";
+
+  onKeyDownCapture?(evt: KeyboardEvent): void;
 }
 
 export type TaggedViewProps = Omit<ViewProps, "tag">;

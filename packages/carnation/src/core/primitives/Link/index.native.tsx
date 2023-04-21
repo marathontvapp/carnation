@@ -1,7 +1,7 @@
 import React, { forwardRef, useContext } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
 import { LinkProps } from "./types";
-import { styled } from "nativewind";
+import { styled } from "../../styled.native";
 import { TextContext } from "../Text/context";
 import { useAriaProps } from "../../hooks/useAriaProps.native";
 import { useConfig } from "../../context";
